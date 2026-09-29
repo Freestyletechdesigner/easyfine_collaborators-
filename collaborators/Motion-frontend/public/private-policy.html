@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — Easy Find</title>
+    <meta name="description" content="Easy Find Privacy Policy — how we collect, use and protect your data.">
+    <link rel="icon" type="image/x-icon" href="/logo/logo.JPEG">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0d7068;
+            --primary-dark: #055361;
+            --primary-light: #e6f7f5;
+            --bg: #f8fafc;
+            --text: #111827;
+            --muted: #6b7280;
+            --border: #e5e7eb;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ── Nav ─────────────────────────────────── */
+        .pp-nav {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 50;
+            padding: 0 24px;
+        }
+        .pp-nav-inner {
+            max-width: 1100px; margin: 0 auto;
+            height: 66px; display: flex; align-items: center; justify-content: space-between;
+        }
+        .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); }
+        .brand-mark {
+            width: 34px; height: 34px; border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff; font-weight: 700; display: grid; place-items: center;
+        }
+        .nav-back {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 9px 16px; border-radius: 10px; font-size: 14px;
+            border: 1px solid var(--border); color: var(--muted); transition: .2s;
+        }
+        .nav-back:hover { background: var(--primary-light); color: var(--primary-dark); border-color: var(--primary-light); text-decoration: none; }
+
+        /* ── Hero ────────────────────────────────── */
+        .pp-hero {
+            background: linear-gradient(135deg, var(--primary-dark), #037979);
+            padding: 64px 24px 80px; text-align: center; color: #fff;
+        }
+        .pp-hero h1 { font-size: clamp(28px, 4vw, 44px); font-weight: 700; margin-bottom: 12px; }
+        .pp-hero p  { font-size: 15px; opacity: .85; max-width: 560px; margin: 0 auto; }
+        .pp-hero .updated { margin-top: 16px; font-size: 13px; opacity: .65; }
+
+        /* ── Content ─────────────────────────────── */
+        .pp-wrap {
+            max-width: 820px; margin: -36px auto 80px; padding: 0 24px;
+        }
+        .pp-card {
+            background: #fff; border-radius: 20px;
+            box-shadow: 0 4px 32px rgba(0,0,0,.07);
+            border: 1px solid #eef2f7; padding: 40px 44px;
+        }
+
+        /* ── TOC ─────────────────────────────────── */
+        .toc {
+            background: var(--primary-light); border-radius: 12px;
+            padding: 22px 26px; margin-bottom: 36px; border-left: 4px solid var(--primary);
+        }
+        .toc h3 { font-size: 14px; font-weight: 700; color: var(--primary-dark); margin-bottom: 12px; text-transform: uppercase; letter-spacing: .06em; }
+        .toc ol { padding-left: 20px; }
+        .toc ol li { margin-bottom: 6px; font-size: 14px; }
+        .toc ol li a { color: var(--primary-dark); font-weight: 500; }
+        .toc ol li a:hover { text-decoration: underline; }
+
+        /* ── Sections ────────────────────────────── */
+        .pp-section { margin-bottom: 40px; }
+        .pp-section h2 {
+            font-size: 20px; font-weight: 700; color: var(--primary-dark);
+            margin-bottom: 16px; padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-light);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .pp-section h2 i { font-size: 18px; color: var(--primary); }
+        .pp-section p  { color: #374151; font-size: 15px; margin-bottom: 14px; }
+        .pp-section ul, .pp-section ol {
+            padding-left: 22px; margin-bottom: 14px; color: #374151; font-size: 15px;
+        }
+        .pp-section li { margin-bottom: 8px; }
+        .pp-section strong { color: var(--text); }
+
+        /* ── Info box ────────────────────────────── */
+        .info-box {
+            background: #f0f7ff; border-left: 3px solid #1976d2;
+            border-radius: 0 10px 10px 0; padding: 14px 18px;
+            font-size: 14px; color: #1565c0; margin: 16px 0;
+        }
+        .info-box i { margin-right: 8px; }
+
+        /* ── Contact card ────────────────────────── */
+        .contact-card {
+            background: linear-gradient(135deg, var(--primary-dark), #037979);
+            border-radius: 14px; padding: 28px; color: #fff; text-align: center; margin-top: 36px;
+        }
+        .contact-card h3 { font-size: 18px; margin-bottom: 8px; }
+        .contact-card p  { font-size: 14px; opacity: .85; margin-bottom: 16px; color: #fff;}
+        .contact-card a  { color: #8af7eb; font-weight: 600; }
+
+        /* ── Footer ──────────────────────────────── */
+        .pp-footer {
+            background: #fff; border-top: 1px solid var(--border);
+            padding: 20px 24px; text-align: center; font-size: 13px; color: var(--muted);
+        }
+        .pp-footer a { color: var(--primary); font-weight: 600; }
+
+        @media (max-width: 640px) {
+            .pp-card { padding: 24px 20px; }
+            .pp-hero  { padding: 48px 20px 64px; }
+        }
+    </style>
+    <!-- OneSignal Web Push -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script src="/onesignal-init.js" defer></script>
+</head>
+<body>
+
+<nav class="pp-nav">
+    <div class="pp-nav-inner">
+        <a href="/" class="brand">
+            <span class="brand-mark">E</span>Easy Find
+        </a>
+        <a href="/" class="nav-back"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+    </div>
+</nav>
+
+<div class="pp-hero">
+    <h1><i class="fa-solid fa-shield-halved" style="margin-right:12px"></i>Privacy Policy</h1>
+    <p>We are committed to protecting your privacy and handling your personal information responsibly.</p>
+    <div class="updated">Last updated: June 2026</div>
+</div>
+
+<div class="pp-wrap">
+    <div class="pp-card">
+
+        <!-- TOC -->
+        <div class="toc">
+            <h3><i class="fa-solid fa-list"></i> Contents</h3>
+            <ol>
+                <li><a href="#s1">Information We Collect</a></li>
+                <li><a href="#s2">How We Use Your Information</a></li>
+                <li><a href="#s3">Information Sharing</a></li>
+                <li><a href="#s4">Data Security</a></li>
+                <li><a href="#s5">Cookies & Tracking</a></li>
+                <li><a href="#s6">Push Notifications</a></li>
+                <li><a href="#s7">Your Rights</a></li>
+                <li><a href="#s8">Third-Party Services</a></li>
+                <li><a href="#s9">Children's Privacy</a></li>
+                <li><a href="#s10">Changes to This Policy</a></li>
+                <li><a href="#s11">Contact Us</a></li>
+            </ol>
+        </div>
+
+        <div class="info-box">
+            <i class="fa-solid fa-circle-info"></i>
+            This privacy policy applies to <strong>Easy Find</strong> — a real estate platform for Enugu State, Nigeria. By using our platform, you agree to the practices described here.
+        </div>
+
+        <!-- 1 -->
+        <div class="pp-section" id="s1">
+            <h2><i class="fa-solid fa-database"></i> 1. Information We Collect</h2>
+            <p>We collect information you provide directly and information generated as you use the platform:</p>
+            <ul>
+                <li><strong>Account information:</strong> Name, email address, phone number, and password when you register as an agent or user.</li>
+                <li><strong>Profile information:</strong> Profile photo, bio, and business details agents add to their profiles.</li>
+                <li><strong>Property listings:</strong> Photos, descriptions, prices, locations, and details of properties agents post.</li>
+                <li><strong>Identity verification data:</strong> NIN (National Identification Number) and biometric data (selfie) submitted during agent verification — processed by Smile ID, not stored raw on our servers.</li>
+                <li><strong>Payment information:</strong> Transaction references and payment status via Paystack. We do not store card numbers.</li>
+                <li><strong>Usage data:</strong> Pages visited, search queries, property views, and interactions on the platform.</li>
+                <li><strong>Device information:</strong> Browser type, IP address, and device identifiers for security and analytics.</li>
+                <li><strong>Communications:</strong> Messages and comments you submit through the platform.</li>
+            </ul>
+        </div>
+
+        <!-- 2 -->
+        <div class="pp-section" id="s2">
+            <h2><i class="fa-solid fa-gear"></i> 2. How We Use Your Information</h2>
+            <p>We use collected information to:</p>
+            <ul>
+                <li>Provide, operate, and improve the Easy Find platform</li>
+                <li>Verify agent identities and maintain platform integrity</li>
+                <li>Process payments for boost and verification services</li>
+                <li>Send transactional emails (OTP codes, listing confirmations, boost notifications)</li>
+                <li>Send push notifications about new listings and platform updates (with your consent)</li>
+                <li>Analyse usage patterns to improve search and discovery</li>
+                <li>Detect and prevent fraud, spam, or abuse</li>
+                <li>Comply with legal obligations</li>
+                <li>Respond to your support requests and inquiries</li>
+            </ul>
+        </div>
+
+        <!-- 3 -->
+        <div class="pp-section" id="s3">
+            <h2><i class="fa-solid fa-share-nodes"></i> 3. Information Sharing</h2>
+            <p>We <strong>do not sell your personal data</strong>. We share information only in these circumstances:</p>
+            <ul>
+                <li><strong>Public profile information:</strong> Agent names, profile photos, stands, and property listings are publicly visible to help buyers find agents.</li>
+                <li><strong>Service providers:</strong> Paystack (payments), Smile ID (identity verification), Google (OAuth login, Analytics), OneSignal (push notifications), EmailJS (contact forms).</li>
+                <li><strong>Legal requirements:</strong> When required by Nigerian law or to protect the rights and safety of our users.</li>
+                <li><strong>Business transfers:</strong> In the event of a merger or acquisition, your data may be transferred as part of the business assets.</li>
+            </ul>
+        </div>
+
+        <!-- 4 -->
+        <div class="pp-section" id="s4">
+            <h2><i class="fa-solid fa-lock"></i> 4. Data Security</h2>
+            <p>We implement industry-standard security measures to protect your data:</p>
+            <ul>
+                <li>Passwords are hashed using <strong>bcrypt</strong> — we never store plain-text passwords</li>
+                <li>All data transmission is encrypted via <strong>HTTPS/TLS</strong></li>
+                <li>Session cookies use <code>httpOnly</code>, <code>secure</code>, and <code>sameSite</code> flags</li>
+                <li>Payment processing is handled entirely by <strong>Paystack</strong> — we do not handle card data</li>
+                <li>Biometric verification is processed by <strong>Smile ID</strong> under their security protocols</li>
+                <li>API rate limiting protects against brute-force attacks</li>
+            </ul>
+            <p>No system is 100% secure. While we do our best to protect your data, we cannot guarantee absolute security. Report any security concerns to <a href="mailto:info@easyfind.com.ng">info@easyfind.com.ng</a>.</p>
+        </div>
+
+        <!-- 5 -->
+        <div class="pp-section" id="s5">
+            <h2><i class="fa-solid fa-cookie-bite"></i> 5. Cookies & Tracking</h2>
+            <p>We use cookies and similar technologies for:</p>
+            <ul>
+                <li><strong>Session management:</strong> To keep you logged in across pages</li>
+                <li><strong>Preferences:</strong> To remember your cookie consent and settings</li>
+                <li><strong>Analytics:</strong> Google Analytics (anonymised) to understand how people use the platform</li>
+            </ul>
+            <p>You can control cookies through your browser settings. Disabling cookies may affect some platform features like staying logged in.</p>
+        </div>
+
+        <!-- 6 -->
+        <div class="pp-section" id="s6">
+            <h2><i class="fa-solid fa-bell"></i> 6. Push Notifications</h2>
+            <p>Easy Find uses <strong>OneSignal</strong> to send push notifications about new property listings and platform updates.</p>
+            <ul>
+                <li>Push notifications are <strong>opt-in</strong> — you must click "Allow" in your browser to receive them</li>
+                <li>You can unsubscribe at any time through your browser notification settings</li>
+                <li>We may use push notifications to alert you about new listings, boost activations, and account updates</li>
+                <li>Anonymous visitors who subscribe receive general property alerts; logged-in agents receive targeted account notifications</li>
+            </ul>
+        </div>
+
+        <!-- 7 -->
+        <div class="pp-section" id="s7">
+            <h2><i class="fa-solid fa-user-shield"></i> 7. Your Rights</h2>
+            <p>You have the following rights regarding your personal data:</p>
+            <ul>
+                <li><strong>Access:</strong> Request a copy of the personal data we hold about you</li>
+                <li><strong>Correction:</strong> Update incorrect or incomplete information via your account settings</li>
+                <li><strong>Deletion:</strong> Request deletion of your account and associated data</li>
+                <li><strong>Data portability:</strong> Request your data in a machine-readable format</li>
+                <li><strong>Opt-out:</strong> Unsubscribe from push notifications or marketing emails at any time</li>
+            </ul>
+            <p>To exercise these rights, contact us at <a href="mailto:info@easyfind.com.ng">info@easyfind.com.ng</a>. We will respond within 30 days.</p>
+        </div>
+
+        <!-- 8 -->
+        <div class="pp-section" id="s8">
+            <h2><i class="fa-solid fa-puzzle-piece"></i> 8. Third-Party Services</h2>
+            <p>Easy Find integrates with the following third-party services, each with their own privacy policies:</p>
+            <ul>
+                <li><strong>Paystack</strong> — payment processing (<a href="https://paystack.com/privacy" target="_blank">paystack.com/privacy</a>)</li>
+                <li><strong>Smile ID</strong> — identity verification (<a href="https://usesmileid.com/privacy-policy" target="_blank">usesmileid.com/privacy-policy</a>)</li>
+                <li><strong>Google Analytics & OAuth</strong> — analytics and login (<a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a>)</li>
+                <li><strong>OneSignal</strong> — push notifications (<a href="https://onesignal.com/privacy_policy" target="_blank">onesignal.com/privacy_policy</a>)</li>
+                <li><strong>EmailJS</strong> — contact form delivery (<a href="https://www.emailjs.com/legal/privacy-policy/" target="_blank">emailjs.com/legal/privacy-policy</a>)</li>
+            </ul>
+        </div>
+
+        <!-- 9 -->
+        <div class="pp-section" id="s9">
+            <h2><i class="fa-solid fa-child"></i> 9. Children's Privacy</h2>
+            <p>Easy Find is not directed at children under the age of 18. We do not knowingly collect personal data from minors. If you believe a child has provided us with personal information, please contact us and we will delete it promptly.</p>
+        </div>
+
+        <!-- 10 -->
+        <div class="pp-section" id="s10">
+            <h2><i class="fa-solid fa-rotate"></i> 10. Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time. When we make significant changes, we will:</p>
+            <ul>
+                <li>Update the "Last updated" date at the top of this page</li>
+                <li>Notify registered agents by email or push notification</li>
+            </ul>
+            <p>Continued use of the platform after changes constitutes acceptance of the updated policy.</p>
+        </div>
+
+        <!-- 11 -->
+        <div class="pp-section" id="s11">
+            <h2><i class="fa-solid fa-envelope"></i> 11. Contact Us</h2>
+            <p>For privacy-related questions or to exercise your rights:</p>
+
+            <div class="contact-card">
+                <h3>Easy Find Privacy Team</h3>
+                <p>We take your privacy seriously and will respond to all requests within 30 days.</p>
+                <a href="mailto:info@easyfind.com.ng"><i class="fa-solid fa-envelope"></i> info@easyfind.com.ng</a>
+                &nbsp;&nbsp;
+                <a href="https://wa.me/2347042648065" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<footer class="pp-footer">
+    <p>&copy; 2026 <a href="/">Easy Find</a> — Verified property listings in Enugu State. &nbsp;|&nbsp; <a href="/terms">Terms of Service</a> &nbsp;|&nbsp; <a href="/private-policy">Privacy Policy</a></p>
+</footer>
+
+</body>
+</html>

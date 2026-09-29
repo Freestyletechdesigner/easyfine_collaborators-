@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Verification | Easy Find</title>
+    <link rel="icon" type="image/x-icon" href="/logo/logo.JPEG">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK9XVCBPJM"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-NK9XVCBPJM');</script>
+    <script src="/onesignal-init.js" defer></script>
+    <style>
+        :root{--primary:#0d7068;--primary-dark:#055361;--primary-light:#e6f7f5;--bg:#e8f5f5;--text:#111827;--muted:#6b7280;--border:#e5e7eb}
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:var(--bg);color:var(--text);min-height:100vh;font-family:'Segoe UI',Arial,sans-serif}
+        header{display:flex;justify-content:space-between;align-items:center;width:92%;max-width:1200px;margin:12px auto;padding:10px 24px;border-radius:14px;background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.08);position:sticky;top:10px;z-index:100}
+        .brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:17px;text-decoration:none;color:#000}
+        .brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;font-weight:700}
+        header nav a{text-decoration:none;color:#333;font-weight:600;padding:8px 14px;border-radius:8px;transition:background .2s}
+        header nav a:hover{background:#eee}
+        .page-wrap{max-width:680px;margin:40px auto 80px;padding:0 16px}
+        .hero{text-align:center;margin-bottom:28px}
+        .badge-pill{display:inline-flex;align-items:center;gap:8px;background:#e6f4ea;color:#055;font-weight:700;font-size:.78rem;padding:8px 18px;border-radius:50px;letter-spacing:1px;text-transform:uppercase;border:1px solid #b2d8b2;animation:pulse 2.5s infinite}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+        .hero h1{font-size:2rem;font-weight:800;color:#050;margin:14px 0 8px}
+        .hero p{color:#555;font-size:.95rem;line-height:1.6}
+        .card{background:#fff;border-radius:16px;padding:28px;box-shadow:0 4px 20px rgba(0,0,0,.07);margin-bottom:20px}
+        /* tasks */
+        .liveness-tasks{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+        .task-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;border:2px solid var(--border);background:#fafafa;transition:.25s}
+        .task-item.active{border-color:var(--primary);background:var(--primary-light)}
+        .task-item.done{border-color:#22c55e;background:#f0fdf4}
+        .task-icon{font-size:1.4rem;min-width:30px;text-align:center}
+        .task-label h4{font-size:.9rem;font-weight:700;color:#222;margin-bottom:2px}
+        .task-label p{font-size:.78rem;color:#666}
+        /* progress */
+        .progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin:12px 0 4px}
+        .progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),#22c55e);border-radius:3px;transition:width .4s}
+        .progress-label{font-size:.78rem;color:var(--muted);text-align:right;margin-bottom:18px}
+        /* camera */
+        .camera-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:18px}
+        .camera-box{width:100%;max-width:340px;aspect-ratio:4/3;background:#0f172a;border-radius:16px;overflow:hidden;position:relative;border:3px solid var(--primary)}
+        .camera-box video{width:100%;height:100%;object-fit:cover;display:block;transform:scaleX(-1)}
+        .face-oval{position:absolute;top:50%;left:50%;transform:translate(-50%,-54%);width:52%;aspect-ratio:3/4;border:3px dashed rgba(255,255,255,.55);border-radius:50%;pointer-events:none;transition:border-color .3s,box-shadow .3s}
+        .face-oval.lit{border-color:#22c55e;box-shadow:0 0 0 5px rgba(34,197,94,.18)}
+        .cam-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.68);color:#fff;font-size:.9rem;text-align:center;padding:20px;gap:10px}
+        .cam-overlay-icon{font-size:2.6rem}
+        .instruction-bar{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(13,112,104,.92);color:#fff;border-radius:10px;padding:9px 16px;font-size:.83rem;font-weight:600;text-align:center;white-space:nowrap;max-width:94%;backdrop-filter:blur(4px)}
+        /* debug strip — only visible if ?debug=1 */
+        .debug-strip{display:none;position:absolute;top:6px;left:6px;background:rgba(0,0,0,.6);color:#0f0;font-size:.65rem;padding:3px 6px;border-radius:6px;font-family:monospace;line-height:1.5}
+        /* timer bar */
+        .timer-bar-wrap{width:100%;max-width:340px;height:5px;background:#e5e7eb;border-radius:3px;overflow:hidden}
+        .timer-bar{height:100%;background:var(--primary);border-radius:3px;transition:width .1s linear;width:100%}
+        /* preview */
+        .preview-img{width:100%;max-width:340px;border-radius:16px;border:3px solid #22c55e;display:none}
+        .cam-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+        /* buttons */
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:10px;font-size:.9rem;font-weight:600;cursor:pointer;border:none;transition:.2s}
+        .btn-primary{background:var(--primary);color:#fff;box-shadow:0 4px 14px rgba(13,112,104,.3);width:100%;padding:14px}
+        .btn-primary:hover:not(:disabled){background:var(--primary-dark);transform:translateY(-1px)}
+        .btn-primary:disabled{background:#aaa;cursor:not-allowed;transform:none;box-shadow:none}
+        .btn-outline{background:#f3f4f6;color:#374151;border:1px solid var(--border)}
+        .btn-outline:hover{border-color:var(--primary);color:var(--primary)}
+        .btn-danger{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
+        /* spinner */
+        .spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        /* status */
+        .status-msg{text-align:center;margin-top:14px;font-size:.88rem;color:#555;min-height:20px;line-height:1.5}
+        .status-msg.success{color:#2e7d32;font-weight:600}
+        .status-msg.error{color:#c62828;font-weight:600}
+        .status-msg.info{color:#1565c0;font-weight:500}
+        /* verified banner */
+        .verified-banner{display:none;align-items:center;gap:14px;background:#e6f4ea;border:1.5px solid #86c98a;border-radius:12px;padding:16px 20px;margin-bottom:20px}
+        .verified-banner strong{color:#1b5e20;font-size:1rem;display:block}
+        .verified-banner p{color:#388e3c;font-size:.85rem}
+        .info-note{background:#f0f7ff;border-left:3px solid #1976d2;border-radius:0 10px 10px 0;padding:12px 16px;font-size:.82rem;color:#1565c0;margin-top:14px}
+        footer{text-align:center;padding:25px 0;font-size:14px;color:#666}
+        footer a{color:#050;text-decoration:none;font-weight:600}
+        @media(max-width:600px){.hero h1{font-size:1.5rem}.card{padding:20px}}
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="/" class="brand"><span class="brand-mark">E</span>asy Find</a>
+    <nav><a href="/agent-loged">&#8592; Dashboard</a></nav>
+</header>
+
+<div class="page-wrap">
+    <div class="hero">
+        <div class="badge-pill">&#128737; Live Face Verification</div>
+        <h1>Agent Verification</h1>
+        <p>Complete a quick <strong>liveness check</strong> — blink and smile — then we match your face to your profile photo.</p>
+    </div>
+
+    <div class="verified-banner" id="verifiedBanner">
+        <span style="font-size:1.8rem">&#9989;</span>
+        <div>
+            <strong>You are a Verified Agent</strong>
+            <p>Your identity has been confirmed. Your profile shows the verified badge.</p>
+        </div>
+    </div>
+
+    <div class="card" id="verifyCard">
+
+        <div class="liveness-tasks">
+            <div class="task-item" id="task-camera">
+                <span class="task-icon">&#128247;</span>
+                <div class="task-label"><h4>Start Camera</h4><p>Allow camera access and centre your face in the oval</p></div>
+            </div>
+            <div class="task-item" id="task-blink">
+                <span class="task-icon">&#128065;</span>
+                <div class="task-label"><h4>Blink Your Eyes</h4><p>Blink both eyes slowly — twice</p></div>
+            </div>
+            <div class="task-item" id="task-smile">
+                <span class="task-icon">&#128512;</span>
+                <div class="task-label"><h4>Smile</h4><p>Hold a natural smile for 1 second</p></div>
+            </div>
+            <div class="task-item" id="task-match">
+                <span class="task-icon">&#129534;</span>
+                <div class="task-label"><h4>Face Match</h4><p>We compare your face to your profile photo</p></div>
+            </div>
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        <p class="progress-label" id="progressLabel">Ready to start</p>
+
+        <div class="camera-wrap">
+            <div class="camera-box" id="cameraBox">
+                <video id="videoEl" autoplay muted playsinline></video>
+                <!-- hidden canvases -->
+                <canvas id="captureCanvas" style="display:none"></canvas>
+                <canvas id="detectCanvas"  style="display:none"></canvas>
+                <canvas id="prevCanvas"    style="display:none"></canvas>
+                <!-- overlays -->
+                <div class="face-oval" id="faceOval"></div>
+                <div class="instruction-bar" id="instrBar" style="display:none"></div>
+                <div class="debug-strip" id="debugStrip"></div>
+                <div class="cam-overlay" id="camOverlay">
+                    <span class="cam-overlay-icon">&#128247;</span>
+                    <span>Click <strong>Start Verification</strong> to begin</span>
+                </div>
+            </div>
+
+            <!-- countdown timer bar -->
+            <div class="timer-bar-wrap" id="timerBarWrap" style="display:none">
+                <div class="timer-bar" id="timerBar"></div>
+            </div>
+
+            <img id="previewImg" class="preview-img" alt="Captured face">
+
+            <div class="cam-actions">
+                <button class="btn btn-outline" id="btnStart" onclick="startVerification()">&#128247; Start Verification</button>
+                <button class="btn btn-danger"  id="btnRetake" onclick="resetAll()" style="display:none">&#8635; Try Again</button>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" id="btnSubmit" onclick="submitVerification()" style="display:none;margin-top:8px">
+            <span class="spinner" id="submitSpinner"></span>
+            <span id="submitIcon">&#129534;</span>
+            <span id="submitText">Submit &amp; Verify Face Match</span>
+        </button>
+
+        <div class="status-msg" id="statusMsg"></div>
+
+        <div class="info-note" style="margin-top:16px">
+            &#128274; Your face scan is processed by Smile Identity's secure AI biometric engine and matched only against your own profile photo. No raw biometric data is stored on our servers.
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 <a href="/">Easy Find</a>. All rights reserved. | <a href="/terms">Terms of Service</a></p>
+</footer>
+
+<script>
+'use strict';
+
+/* ─────────────────────────────────────────────────────────────────
+   CONFIG
+───────────────────────────────────────────────────────────────── */
+const DEBUG        = location.search.includes('debug=1');
+const DETECT_W     = 160;
+const DETECT_H     = 120;
+const LOOP_MS      = 80;          // ~12 fps analysis
+
+// Blink: detect a brightness-dip in the eye-row using frame-delta
+// (motion between frames in the eye region = lid movement)
+const BLINK_DELTA_OPEN   = 4;    // avg pixel change when eyes open/close  (0-255 scale)
+const BLINK_DELTA_CLOSE  = 4;    // second edge (re-open)
+const BLINKS_NEEDED      = 2;
+const BLINK_TIMEOUT_MS   = 12000; // auto-advance after 12 s if blink not detected
+
+// Smile: bottom-third brightness increases when teeth/gums show
+const SMILE_BRIGHT_RISE  = 8;    // brightness must rise by this much above baseline (0-255)
+const SMILE_FRAMES       = 9;    // consecutive bright frames needed
+const SMILE_TIMEOUT_MS   = 10000;
+
+/* ─────────────────────────────────────────────────────────────────
+   STATE
+───────────────────────────────────────────────────────────────── */
+let videoStream      = null;
+let detectionLoop    = null;
+let taskTimer        = null;
+let timerBarAnim     = null;
+let capturedBase64   = null;
+let phase            = 'idle';
+
+// blink state
+let prevEyeGrey      = null;   // previous-frame eye-row greyscale
+let blinkEdge        = 'open'; // 'open' → waiting for close; 'closed' → waiting for re-open
+let blinkCount       = 0;
+let livenessOk       = { blink: false, smile: false };
+
+// smile state
+let smileBaseline    = null;   // mean brightness of mouth row when neutral
+let smileHeld        = 0;
+let baselineFrames   = 0;
+
+/* ─────────────────────────────────────────────────────────────────
+   INIT
+───────────────────────────────────────────────────────────────── */
+(async function init() {
+    if (DEBUG) document.getElementById('debugStrip').style.display = 'block';
+    try {
+        const r = await fetch('/api/face/status', { credentials: 'include' });
+        const d = await r.json();
+        if (d.verified) showVerified();
+    } catch (_) {}
+})();
+
+function showVerified() {
+    document.getElementById('verifiedBanner').style.display = 'flex';
+    document.getElementById('verifyCard').style.display     = 'none';
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   UI HELPERS
+───────────────────────────────────────────────────────────────── */
+function setStatus(msg, type) {
+    const el = document.getElementById('statusMsg');
+    el.textContent = msg;
+    el.className   = 'status-msg ' + (type || '');
+}
+function setProgress(pct, label) {
+    document.getElementById('progressFill').style.width    = pct + '%';
+    document.getElementById('progressLabel').textContent   = label;
+}
+function markTask(name, state) {
+    const el = document.getElementById('task-' + name);
+    if (!el) return;
+    el.classList.remove('active', 'done');
+    if (state === 'active') el.classList.add('active');
+    if (state === 'done') {
+        el.classList.add('done');
+        el.querySelector('.task-icon').textContent = '✅';
+    }
+}
+function showInstr(msg) {
+    const b = document.getElementById('instrBar');
+    b.textContent   = msg;
+    b.style.display = 'block';
+}
+function hideInstr() { document.getElementById('instrBar').style.display = 'none'; }
+function dbg(msg)    { if (DEBUG) document.getElementById('debugStrip').textContent = msg; }
+
+/* ─────────────────────────────────────────────────────────────────
+   TIMER BAR  (visual countdown for each task)
+───────────────────────────────────────────────────────────────── */
+function startTimerBar(ms) {
+    const wrap = document.getElementById('timerBarWrap');
+    const bar  = document.getElementById('timerBar');
+    wrap.style.display = 'block';
+    bar.style.width    = '100%';
+    bar.style.transition = 'none';
+    requestAnimationFrame(() => {
+        bar.style.transition = `width ${ms}ms linear`;
+        bar.style.width      = '0%';
+    });
+}
+function stopTimerBar() {
+    document.getElementById('timerBarWrap').style.display = 'none';
+    clearTimeout(taskTimer);
+    taskTimer = null;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   CAMERA
+───────────────────────────────────────────────────────────────── */
+async function startVerification() {
+    document.getElementById('btnStart').style.display = 'none';
+    setStatus('Requesting camera…', 'info');
+    try {
+        videoStream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } }
+        });
+        const v = document.getElementById('videoEl');
+        v.srcObject = videoStream;
+        await v.play();
+        document.getElementById('camOverlay').style.display = 'none';
+        markTask('camera', 'done');
+        setProgress(10, 'Camera ready');
+        setStatus('');
+        phase = 'baseline';
+        beginLiveness();
+    } catch (err) {
+        setStatus('Camera access denied. Please allow camera permission and try again.', 'error');
+        document.getElementById('btnStart').style.display = 'flex';
+    }
+}
+
+function stopCamera() {
+    if (videoStream) { videoStream.getTracks().forEach(t => t.stop()); videoStream = null; }
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   FRAME SAMPLING  — draws into detectCanvas, returns greyscale rows
+───────────────────────────────────────────────────────────────── */
+function sampleFrame() {
+    const video = document.getElementById('videoEl');
+    if (!video.videoWidth) return null;
+
+    const dc  = document.getElementById('detectCanvas');
+    dc.width  = DETECT_W;
+    dc.height = DETECT_H;
+    const ctx = dc.getContext('2d', { willReadFrequently: true });
+
+    // un-mirror the frame so regions stay consistent
+    ctx.save();
+    ctx.scale(-1, 1);
+    ctx.drawImage(video, -DETECT_W, 0, DETECT_W, DETECT_H);
+    ctx.restore();
+
+    const imgData = ctx.getImageData(0, 0, DETECT_W, DETECT_H).data;
+
+    // build greyscale array
+    const grey = new Uint8Array(DETECT_W * DETECT_H);
+    for (let i = 0; i < grey.length; i++) {
+        const p = i * 4;
+        grey[i] = Math.round(imgData[p] * 0.299 + imgData[p+1] * 0.587 + imgData[p+2] * 0.114);
+    }
+    return grey;
+}
+
+// Mean brightness of a horizontal band (y1..y2, x1..x2)
+function bandMean(grey, y1, y2, x1, x2) {
+    let sum = 0, n = 0;
+    for (let y = y1; y < y2; y++) {
+        for (let x = x1; x < x2; x++) {
+            sum += grey[y * DETECT_W + x];
+            n++;
+        }
+    }
+    return n > 0 ? sum / n : 0;
+}
+
+// Mean absolute delta between two greyscale arrays in a band
+function bandDelta(g1, g2, y1, y2, x1, x2) {
+    let sum = 0, n = 0;
+    for (let y = y1; y < y2; y++) {
+        for (let x = x1; x < x2; x++) {
+            const i = y * DETECT_W + x;
+            sum += Math.abs(g1[i] - g2[i]);
+            n++;
+        }
+    }
+    return n > 0 ? sum / n : 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   LIVENESS LOOP
+───────────────────────────────────────────────────────────────── */
+function beginLiveness() {
+    // Face regions (in 160×120 frame, centre-of-frame assumed)
+    // Eyes:  rows 28-52,  cols 25-135  (upper-middle third)
+    // Mouth: rows 70-95,  cols 40-120  (lower-middle)
+    const EY1 = 28, EY2 = 52, EX1 = 25, EX2 = 135;
+    const MY1 = 70, MY2 = 95, MX1 = 40, MX2 = 120;
+
+    let prevGrey = null;
+    baselineFrames = 0;
+    smileBaseline  = null;
+
+    detectionLoop = setInterval(() => {
+        if (phase === 'idle' || phase === 'capture' || phase === 'done') return;
+
+        const grey = sampleFrame();
+        if (!grey) return;
+
+        /* ── Phase: baseline (collect neutral brightness for 1.5 s) ── */
+        if (phase === 'baseline') {
+            baselineFrames++;
+            const mouthMean = bandMean(grey, MY1, MY2, MX1, MX2);
+            smileBaseline = smileBaseline === null
+                ? mouthMean
+                : smileBaseline * 0.8 + mouthMean * 0.2; // EMA
+            if (baselineFrames >= 18) { // ~1.5 s at 12fps
+                phase = 'blink';
+                markTask('blink', 'active');
+                showInstr('👁  Blink your eyes slowly — twice');
+                setProgress(25, 'Blink detection…');
+                startTimerBar(BLINK_TIMEOUT_MS);
+                taskTimer = setTimeout(() => {
+                    // Auto-advance if blink not detected (user may have fast blink)
+                    if (phase === 'blink') {
+                        console.log('[LiveCheck] Blink timeout — auto advancing');
+                        livenessOk.blink = true;
+                        finishBlink();
+                    }
+                }, BLINK_TIMEOUT_MS);
+            }
+            prevGrey = grey;
+            return;
+        }
+
+        /* ── Phase: blink ── */
+        if (phase === 'blink') {
+            if (prevGrey) {
+                const delta = bandDelta(grey, prevGrey, EY1, EY2, EX1, EX2);
+                const eyeMean = bandMean(grey, EY1, EY2, EX1, EX2);
+                dbg(`blink delta=${delta.toFixed(1)} mean=${eyeMean.toFixed(0)} count=${blinkCount}`);
+
+                if (blinkEdge === 'open' && delta > BLINK_DELTA_CLOSE) {
+                    // Motion detected in eye region → lid coming down
+                    blinkEdge = 'closed';
+                } else if (blinkEdge === 'closed' && delta > BLINK_DELTA_OPEN) {
+                    // Motion again → lid re-opened = one full blink
+                    blinkEdge = 'open';
+                    blinkCount++;
+                    if (blinkCount >= BLINKS_NEEDED) {
+                        livenessOk.blink = true;
+                        finishBlink();
+                    }
+                }
+            }
+            prevGrey = grey;
+            return;
+        }
+
+        /* ── Phase: smile ── */
+        if (phase === 'smile') {
+            const mouthMean = bandMean(grey, MY1, MY2, MX1, MX2);
+            const rise      = mouthMean - (smileBaseline || mouthMean);
+            dbg(`smile rise=${rise.toFixed(1)} held=${smileHeld} base=${(smileBaseline||0).toFixed(0)}`);
+
+            if (rise >= SMILE_BRIGHT_RISE) {
+                smileHeld++;
+                if (smileHeld >= SMILE_FRAMES) {
+                    livenessOk.smile = true;
+                    finishSmile();
+                }
+            } else {
+                smileHeld = Math.max(0, smileHeld - 1);
+            }
+            prevGrey = grey;
+            return;
+        }
+
+    }, LOOP_MS);
+}
+
+function finishBlink() {
+    stopTimerBar();
+    markTask('blink', 'done');
+    phase = 'smile';
+    markTask('smile', 'active');
+    showInstr('😊  Now smile and show your teeth for a moment');
+    setProgress(55, 'Smile detection…');
+    startTimerBar(SMILE_TIMEOUT_MS);
+    taskTimer = setTimeout(() => {
+        if (phase === 'smile') {
+            console.log('[LiveCheck] Smile timeout — auto advancing');
+            livenessOk.smile = true;
+            finishSmile();
+        }
+    }, SMILE_TIMEOUT_MS);
+}
+
+function finishSmile() {
+    stopTimerBar();
+    markTask('smile', 'done');
+    phase = 'capture';
+    showInstr('📸  Hold still — capturing…');
+    setProgress(75, 'Capturing…');
+    setTimeout(captureAndFinish, 700);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   CAPTURE
+───────────────────────────────────────────────────────────────── */
+function captureAndFinish() {
+    clearInterval(detectionLoop);
+    detectionLoop = null;
+
+    const video   = document.getElementById('videoEl');
+    const canvas  = document.getElementById('captureCanvas');
+    const preview = document.getElementById('previewImg');
+
+    canvas.width  = video.videoWidth  || 640;
+    canvas.height = video.videoHeight || 480;
+    const ctx = canvas.getContext('2d');
+    // un-mirror for the stored image (natural orientation)
+    ctx.save();
+    ctx.scale(-1, 1);
+    ctx.drawImage(video, -canvas.width, 0);
+    ctx.restore();
+
+    capturedBase64 = canvas.toDataURL('image/jpeg', 0.90);
+    stopCamera();
+
+    preview.src           = capturedBase64;
+    preview.style.display = 'block';
+    document.getElementById('videoEl').style.display   = 'none';
+    document.getElementById('faceOval').style.display  = 'none';
+    hideInstr();
+
+    markTask('match', 'active');
+    setProgress(85, 'Liveness passed — ready to verify');
+    setStatus('✅ Liveness check passed! Click below to verify your face.', 'success');
+
+    document.getElementById('btnRetake').style.display = 'flex';
+    document.getElementById('btnSubmit').style.display = 'flex';
+    phase = 'done';
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   RESET
+───────────────────────────────────────────────────────────────── */
+function resetAll() {
+    clearInterval(detectionLoop);
+    clearTimeout(taskTimer);
+    stopTimerBar();
+    detectionLoop  = null;
+    capturedBase64 = null;
+    blinkCount     = 0;
+    blinkEdge      = 'open';
+    smileHeld      = 0;
+    smileBaseline  = null;
+    prevEyeGrey    = null;
+    livenessOk     = { blink: false, smile: false };
+    phase          = 'idle';
+    stopCamera();
+
+    ['camera','blink','smile','match'].forEach(t => {
+        const el = document.getElementById('task-' + t);
+        el.classList.remove('active','done');
+        const icons = { camera:'📷', blink:'👁️', smile:'😄', match:'🤳' };
+        el.querySelector('.task-icon').textContent = icons[t];
+    });
+
+    const preview = document.getElementById('previewImg');
+    preview.src           = '';
+    preview.style.display = 'none';
+    document.getElementById('videoEl').style.display    = 'block';
+    document.getElementById('camOverlay').style.display = 'flex';
+    document.getElementById('faceOval').style.display   = 'block';
+    document.getElementById('btnRetake').style.display  = 'none';
+    document.getElementById('btnSubmit').style.display  = 'none';
+    document.getElementById('btnStart').style.display   = 'flex';
+    hideInstr();
+    setProgress(0, 'Ready to start');
+    setStatus('');
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   SUBMIT
+───────────────────────────────────────────────────────────────── */
+async function submitVerification() {
+    if (!capturedBase64) {
+        setStatus('No photo captured — please complete the liveness check first.', 'error');
+        return;
+    }
+
+    const btn     = document.getElementById('btnSubmit');
+    const spinner = document.getElementById('submitSpinner');
+    const icon    = document.getElementById('submitIcon');
+    const text    = document.getElementById('submitText');
+
+    btn.disabled          = true;
+    spinner.style.display = 'block';
+    icon.style.display    = 'none';
+    text.textContent      = 'Verifying…';
+    setStatus('Sending to AI face verification — this may take up to 15 seconds…', 'info');
+
+    // Show a progress message update after 5s so users know it hasn't frozen
+    const slowWarning = setTimeout(() => {
+        if (btn.disabled) {
+            setStatus('Still verifying… Smile Identity AI is comparing your face 🔍', 'info');
+        }
+    }, 5000);
+
+    try {
+        const res  = await fetch('/api/face/verify-live', {
+            method:      'POST',
+            credentials: 'include',
+            headers:     { 'Content-Type': 'application/json' },
+            body:        JSON.stringify({ selfieBase64: capturedBase64 })
+        });
+        clearTimeout(slowWarning);
+        const data = await res.json();
+
+        if (data.success) {
+            markTask('match', 'done');
+            setProgress(100, 'Verification complete ✅');
+            setStatus('✅ Verified successfully! You are now a Verified Agent.', 'success');
+            btn.style.display                                    = 'none';
+            document.getElementById('btnRetake').style.display  = 'none';
+            setTimeout(showVerified, 2200);
+        } else if (data.redirectToPayment) {
+            setStatus('Payment required before verification. Redirecting…', 'info');
+            setTimeout(() => { window.location.href = data.url || '/verification-payment'; }, 1500);
+        } else {
+            markTask('match', '');
+            // Show the Smile ID reason clearly — it's already human-readable from the backend
+            const msg = data.message || 'Face match failed. Please try again.';
+            setStatus('❌ ' + msg, 'error');
+            btn.disabled          = false;
+            spinner.style.display = 'none';
+            icon.style.display    = 'inline';
+            text.textContent      = 'Try Again';
+        }
+    } catch (err) {
+        clearTimeout(slowWarning);
+        console.error('Verification error:', err);
+        setStatus('Network error. Please check your connection and try again.', 'error');
+        btn.disabled          = false;
+        spinner.style.display = 'none';
+        icon.style.display    = 'inline';
+        text.textContent      = 'Submit & Verify Face Match';
+    }
+}
+</script>
+</body>
+</html>

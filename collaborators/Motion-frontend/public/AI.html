@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>EasyFind AI - Best AI For Finding Property</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="icon" type="image/x-icon" href="/logo/logo.JPEG">
+  <link rel="stylesheet" href="/style/AI.css">
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+  <!-- ── Voice Conversation Overlay (listening + AI speaking, unified) ───── -->
+  <div id="voiceOverlay" style="display:none;">
+    <canvas id="visualizerCanvas"></canvas>
+
+    <!-- Status badge top-right -->
+    <div class="viz-top-row">
+      <div id="vizStatusBadge">
+        <span id="vizStatusDot"></span>
+        <span id="vizStatusText">Listening...</span>
+      </div>
+    </div>
+
+    <!-- Transcript / AI reply text -->
+    <div id="interimText">Listening...</div>
+
+    <!-- Bottom controls: mic pulse ring + Cancel -->
+    <div class="voice-bottom-controls">
+      <div class="voice-mic-ring" id="voiceMicRing">
+        <i class="fa-solid fa-microphone"></i>
+      </div>
+      <button class="voice-cancel-btn" id="voiceCancelBtn" onclick="cancelVoiceMode()">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <!-- ── AI Speaking Overlay (reuses same canvas via voice overlay) ──────── -->
+  <!-- kept as a no-display placeholder so existing JS refs don't break -->
+  <div id="aiSpeakingOverlay" style="display:none;">
+    <canvas id="aiVisualizerCanvas"></canvas>
+    <div class="viz-top-row">
+      <div id="aiVizStatusBadge">
+        <span id="aiVizStatusDot"></span>
+        <span id="aiVizStatusText">Fred is speaking...</span>
+      </div>
+    </div>
+    <div id="aiSpeakingText">Preparing your result...</div>
+  </div>
+
+  <button class="stop-ai-btn" id="stopAiBtn" onclick="stopAiVoice()">❌</button>
+
+  <!-- ── Login Modal ───────────────────────────────────────────────────── -->
+  <div class="modal-backdrop" id="loginModal" onclick="handleModalBackdropClick(event)">
+    <div class="login-modal">
+      <button class="modal-close-btn" onclick="closeLoginModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="modal-logo">
+        <div class="logo-box" style="width:48px;height:48px;font-size:20px;border-radius:14px;">E</div>
+      </div>
+
+      <h2 class="modal-title">Welcome to EasyFind AI</h2>
+      <p class="modal-subtitle">Sign in to save your search history and get personalised property suggestions.</p>
+
+      <!-- Google One-Tap button rendered by GIS -->
+      <div class="google-btn-wrapper">
+        <div id="g_id_onload"
+             data-client_id="YOUR_GOOGLE_CLIENT_ID"
+             data-callback="handleGoogleLogin"
+             data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin"
+             data-type="standard"
+             data-shape="pill"
+             data-theme="outline"
+             data-text="continue_with"
+             data-size="large"
+             data-logo_alignment="left"
+             data-width="280">
+        </div>
+      </div>
+
+      <p class="modal-terms">
+        By continuing, you agree to our
+        <a href="/terms" target="_blank">Terms</a> and
+        <a href="/private-policy" target="_blank">Privacy Policy</a>.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Sidebar ───────────────────────────────────────────────────────── -->
+  <div id="sidebarOverlay" onclick="toggleSidebar()"></div>
+  <div id="sidebar">
+    <div class="brand-section">
+      <div class="logo-box">E</div>
+      <span class="brand-name">asy Find</span>
+    </div>
+    <div class="sidebar-header">
+      <h3>History</h3>
+      <button onclick="toggleSidebar()" style="background:none;border:none;font-size:20px;color:inherit;">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <button class="new-chat-btn" onclick="startNewChat()">
+      <i class="fa-solid fa-plus"></i> New Chat
+    </button>
+    <div class="history-list" id="historyList"></div>
+
+    <!-- User profile avatar in sidebar bottom -->
+    <div class="sidebar-user-row">
+      <div class="user-profile"></div>
+      <span class="sidebar-user-name" id="sidebarUserName">Login</span>
+      <button class="sidebar-logout-btn" id="sidebarLogoutBtn" onclick="logout()" title="Sign out" style="display:none;">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
+    </div>
+
+    <button class="clear-all-btn" onclick="clearAllHistory()">
+      <i class="fa-solid fa-trash-can"></i> Clear All History
+    </button>
+  </div>
+
+  <!-- ── Top bar ───────────────────────────────────────────────────────── -->
+  <div class="top-bar">
+    <div class="brand-section">
+      <div class="logo-box">E</div>
+      <span class="brand-name">asy Find</span>
+    </div>
+    <button class="action-btn-icon" onclick="toggleSidebar()">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- ── Hero ──────────────────────────────────────────────────────────── -->
+  <div class="hero-container" id="heroContainer">
+    <div class="search-agent-container">
+      <div class="agent-body"></div>
+      <div class="agent-head">
+        <div class="agent-visor">
+          <div class="agent-eye"></div>
+          <div class="agent-eye"></div>
+        </div>
+      </div>
+      <div class="agent-arm-left"></div>
+      <div class="agent-arm-right-container">
+        <div class="agent-arm-right"></div>
+        <div class="agent-hand-grip">
+          <div class="agent-magnifying-glass"></div>
+        </div>
+      </div>
+    </div>
+    <h1 class="hero-title">Find your next home<br>with ease</h1>
+    <div class="typing-container">
+      <span id="typing-text"></span><span class="cursor"></span>
+    </div>
+  </div>
+
+  <!-- ── Chat ──────────────────────────────────────────────────────────── -->
+  <div class="chat-container" id="chatContainer">
+    <div class="messages-wrapper" id="messagesWrapper"></div>
+  </div>
+
+  <!-- ── Input ─────────────────────────────────────────────────────────── -->
+  <div class="input-container" id="mainInputContainer">
+    <div class="input-box">
+      <button class="action-btn-icon"><i class="fa-solid fa-paperclip"></i></button>
+      <input
+        type="text"
+        id="userInput"
+        placeholder="Ask EasyFind AI for properties..."
+        oninput="toggleButtons()"
+        onkeypress="handleKeyPress(event)"
+      />
+      <button class="action-btn-icon" id="micBtn" onclick="toggleVoiceRecognition()">
+        <i class="fa-solid fa-microphone"></i>
+      </button>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+
+  <script src="/logic/AI.js"></script>
+</body>
+</html>

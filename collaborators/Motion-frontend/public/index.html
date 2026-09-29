@@ -1,0 +1,488 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Easy Find — Find Your Perfect Property in Enugu</title>
+    <meta name="description" content="Discover verified homes, lands, shops and commercial properties across Enugu State on Easy Find.">
+    <link rel="icon" type="image/x-icon" href="/logo/logo.JPEG">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK9XVCBPJM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-NK9XVCBPJM');
+    </script>
+    <!-- OneSignal Web Push -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script src="/onesignal-init.js" defer></script>
+</head>
+<body>
+
+<!-- ── Preloader ──────────────────────────────────────────── -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="pl-stage">
+    <svg class="pl-house" viewBox="0 0 200 160" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path class="pl-house-path" d="M20 80 L100 20 L180 80 M40 70 V140 H160 V70 M85 140 V100 H115 V140" />
+    </svg>
+    <div class="pl-logo">
+      <svg class="pl-e" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+        <path class="pl-e-path" d="M50 8 H14 V30 H42 M14 30 V52 H50" />
+      </svg>
+      <div class="pl-text" aria-label="asy Find">
+        <span>a</span><span>s</span><span>y</span><span>&nbsp;</span><span>F</span><span>i</span><span>n</span><span>d</span>
+      </div>
+    </div>
+    <div class="pl-tag">Find your Home<i class="fa-solid fa-house"></i>...</div>
+  </div>
+</div>
+
+<main id="body">
+
+<!-- ── Header / Nav ───────────────────────────────────────── -->
+<header id="nav">
+    <a href="#top" class="brand">
+        <span class="brand-mark">E</span>asy Find
+    </a>
+    <nav class="links">
+        <a href="#top">Home</a>
+        <a href="/properties">Search</a>
+        <a href="#about">About</a>
+        <a href="/properties">Properties</a>
+        <a href="/contact">Contact us</a>
+        <a class="nav-sign-in" href="/login-agent">Sign in</a>
+    </nav>
+
+    <div class="nav2" id="nav2">
+        <div class="top-nav">
+            <a href="#top" class="brand"><span class="brand-mark">E</span>asy Find</a>
+        </div>
+        <a href="#top"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="/properties"><i class="fa-solid fa-magnifying-glass"></i> Search</a>
+        <a href="#about"><i class="fa-regular fa-address-card"></i> About</a>
+        <a href="/properties"><i class="fa-solid fa-building"></i> Properties</a>
+        <a href="/contact"><i class="fa-solid fa-envelope"></i> Contact us</a>
+        <a class="nav-sign-in" href="/login-agent">Sign in</a>
+    </div>
+
+    <div class="hamburger" id="hamburger">
+        <div class="hand"></div>
+        <div class="hand"></div>
+        <div class="hand"></div>
+    </div>
+</header>
+
+<div id="alert"></div>
+
+<div id="user-log"></div>
+<a href="/" class="btn-logout" title="Logout">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+        <polyline points="16 17 21 12 16 7"/>
+        <line x1="21" y1="12" x2="9" y2="12"/>
+    </svg>
+</a>
+
+<!-- ── Hero Section ─────────────────────────────────────── -->
+<section class="hero-new" id="top">
+    <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=80')"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-inner-new">
+        <span class="pill reveal">Verified listings across Nigeria</span>
+        <h1 class="reveal">Find Your <span class="accent">Perfect Property</span></h1>
+        <p class="reveal">Discover verified homes, lands, shops and commercial properties — backed by trusted agents and a transparent process.</p>
+
+        <!-- Hero CTA buttons -->
+        <div class="hero-cta-new reveal">
+            <a href="/easyfind-ai" class="btn-hero-primary">Start searching</a>
+            <a href="/agent-loged" class="btn-hero-outline">List your property</a>
+        </div>
+
+        <!-- Login strip — keeps existing IDs intact -->
+        <div class="hero-login-strip reveal">
+            <a href="/login-agent" id="login-nav-hero">Sign in</a>
+            <div class="hold-login">
+                <div id="login-btn">as client</div>
+                <a href="/login-agent" id="login-agent-btn">as Agent</a>
+            </div>
+        </div>
+
+        <!-- Hero stats -->
+        <div class="hero-meta-new reveal">
+            <div><strong>1,000+</strong><span>Properties</span></div>
+            <div><strong>500+</strong><span>Verified agents</span></div>
+            <div><strong>10k+</strong><span>Happy users</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Featured Properties (4 cards) ─────────────────────── -->
+<section id="available-homes" style="padding:64px 0;background:#f8fafc">
+    <div style="max-width:1280px;margin:0 auto;padding:0 24px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:16px">
+            <div>
+                <span class="eyebrow-tag">Featured</span>
+                <h2 style="margin:8px 0 6px;font-size:clamp(24px,3vw,36px)">Handpicked properties</h2>
+                <p style="color:#6b7280;margin:0">Premium homes and spaces verified by our team.</p>
+            </div>
+        </div>
+        <div class="listings" id="cardsContainer" ></div>
+        <!-- loadMoreBtn kept but hidden — logic.js references it -->
+        <button id="loadMoreBtn" class="load-more-btn" style="display:none">Load More</button>
+        <a href="/properties" style="display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:12px;background:var(--primary-dark);color:#fff;font-weight:600;font-size:14px;text-decoration:none;transition:.2s">
+            View all properties <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </div>
+</section>
+
+<!-- ── About Section ─────────────────────────────────────── -->
+<section id="about" class="about-new">
+    <div class="about-grid-new">
+        <div class="about-media-new reveal">
+            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=80" alt="Modern home interior" loading="lazy">
+            <div class="about-badge-new">
+                <strong>4.9★</strong>
+                <span>Rated by 2,300+ users</span>
+            </div>
+        </div>
+        <div class="about-copy-new reveal">
+            <span class="eyebrow-tag">About Easy Find</span>
+            <h2>A trusted home for your next property.</h2>
+            <p>Welcome to Easy Find, your premium destination for finding the perfect rental home or property to buy. We provide a comprehensive and user-friendly platform for individuals and families to search, browse, rent, sale and buy property in Enugu State.</p>
+            <ul class="about-ticks">
+                <li>Streamlined Search Process — discover available homes with our intuitive search.</li>
+                <li>Expert Agent Support — verified agents to connect with clients and grow business.</li>
+                <li>Safe Offline Payments — no card details required; pay securely in person or via bank transfer.</li>
+            </ul>
+            <a href="/properties" class="btn-hero-primary" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:12px;font-weight:600;text-decoration:none;font-size:15px;">Start searching</a>
+        </div>
+    </div>
+</section>
+
+<!-- ── Trust Section ─────────────────────────────────────── -->
+<section class="trust-section">
+    <div class="trust-section-inner">
+        <div class="trust-section-head">
+            <div class="eyebrow">Why Easy Find</div>
+            <h2>Built on trust, designed for ease</h2>
+        </div>
+        <div class="trust-grid-new">
+            <div class="trust-card-new reveal">
+                <div class="trust-icon-new"><i class="fa-solid fa-check"></i></div>
+                <h3>Verified Listings</h3>
+                <p>Every property is reviewed before going live.</p>
+            </div>
+            <div class="trust-card-new reveal">
+                <div class="trust-icon-new"><i class="fa-solid fa-user"></i></div>
+                <h3>Trusted Agents</h3>
+                <p>Work with KYC-verified, professional agents.</p>
+            </div>
+            <div class="trust-card-new reveal">
+                <div class="trust-icon-new"><i class="fa-solid fa-lock"></i></div>
+                <h3>Secure Communication</h3>
+                <p>Private channels between buyers and agents.</p>
+            </div>
+            <div class="trust-card-new reveal">
+                <div class="trust-icon-new"><i class="fa-solid fa-bolt"></i></div>
+                <h3>Fast Property Search</h3>
+                <p>Find what fits in seconds with smart filters.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Stats Section ─────────────────────────────────────── -->
+<section class="stats-section">
+    <div class="stats-grid-new">
+        <div class="stat-new reveal"><strong data-count="1000">0</strong><span>Properties listed</span></div>
+        <div class="stat-new reveal"><strong data-count="500">0</strong><span>Verified agents</span></div>
+        <div class="stat-new reveal"><strong data-count="10000">0</strong><span>Happy users</span></div>
+        <div class="stat-new reveal"><strong data-count="50">0</strong><span>Locations covered</span></div>
+    </div>
+</section>
+
+
+<!-- ── Agents Section ────────────────────────────────────── -->
+<div class="agents-hold">
+    <section class="agents-section">
+            <div class="agent-search-section">
+                <div class="search-wrapper">
+                    <input type="text" id="agent-search-input" placeholder="Search for agents..." class="animated-search">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                </div>
+                <div id="search-agent-list" class="search-agent-list"></div>
+            </div>
+        <h2 class="agents-title">Our Agents</h2>
+        <div class="agents-container" id="agents-container">
+        </div>
+        <button id="loadMoreAgentsBtn" class="load-more-btn" style="margin-top:16px;">Load More Agents</button>
+    </section>
+
+    <div class="join-agent">
+        <h1>Join Our Agent Community</h1>
+        <p>Join our growing network of verified real estate professionals and connect with serious property seekers across Enugu State.</p>
+        <ul class="agent-benefits">
+            <li>✔ Showcase unlimited property listings</li>
+            <li>✔ Get discovered by thousands of buyers & renters</li>
+            <li>✔ Verified badge that builds client trust</li>
+            <li>✔ Real-time notifications for inquiries</li>
+        </ul>
+        <div class="link-to-join">
+            <a href="/login-agent">Register as Agent</a>
+        </div>
+    </div>
+</div>
+
+
+<!-- ── Login / Signup Modal ──────────────────────────────── -->
+<section class="login">
+    <button class="login-cancel" id="cancel-login-icon" title="Close">
+        <i class="fa-solid fa-xmark"></i>
+    </button>
+    <h1>Login</h1>
+    <form id="login-form">
+        <input type="email" name="email" placeholder="Email Address" required>
+        <span>
+            <input type="password" name="password" id="login-password" placeholder="Password" required>
+            <i id="login-eye" class="fa-solid fa-eye"></i>
+        </span>
+        <div id="googleBtn"></div>
+        <input type="submit" value="Login">
+        <div id="link-to-signup">Don't have an account? Register</div>
+    </form>
+    <form id="signup-form" class="hidden">
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="Email Address" required>
+        <input type="number" name="number" placeholder="Phone Number" required>
+        <span>
+            <input type="password" name="password" id="signup-password" placeholder="Password" required>
+            <i id="signup-eye" class="fa-solid fa-eye"></i>
+        </span>
+        <div class="terms-checkbox">
+            <input type="checkbox" id="terms" name="terms" required>
+            <label for="terms">I agree to the <a href="/terms" target="_blank">Terms of Service</a></label>
+        </div>
+        <input type="submit" value="Sign Up">
+        <div id="link-to-login">Already have an account? Sign in</div>
+    </form>
+</section>
+
+<div id="log-alert"></div>
+<div class="bgf"></div>
+<!-- ── WhatsApp Chat ─────────────────────────────────────── -->
+<section class="chat-us-wa">
+    <div class="wa-link"><span><i class="fa-brands fa-whatsapp"></i></span><span> Need help</span></div>
+</section>
+
+<!-- ── Google Maps ───────────────────────────────────────── -->
+<section class="map">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126868.29328949029!2d7.4302333414811965!3d6.441002532401546!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1044a3cf887d1a25%3A0x9e342e82908e0c3d!2sEnugu!5e0!3m2!1sen!2sng!4v1764622449824!5m2!1sen!2sng" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</section>
+
+<!-- ── Feedback Section (Above Footer) ────────────────────────────────────── -->
+<section class="clients-feedback" id="feedbackPanel">
+    <div class="feedback-section-inner">
+        <div class="feedback-section-header">
+            <span class="eyebrow-tag">Testimonials</span>
+            <h2>What people say</h2>
+            <p>Real experiences from real home hunters and verified agents in Enugu.</p>
+        </div>
+
+        <div class="feedback-grid">
+            <!-- Left Side: Interactive Feedbacks list -->
+            <div class="feedback-list-wrapper">
+                <div class="clients-container" id="feedbackList">
+                    <div class="feedback-loading"><i class="fas fa-spinner spin-icon"></i></div>
+                </div>
+            </div>
+
+            <!-- Right Side: Review Form -->
+            <div class="feedback-form-wrapper">
+                <!-- Write Review Button triggers openFeedback() which adds .feed-move to the parent -->
+                <div id="client-btn">
+                    <i class="fas fa-pen-nib"></i> Write a Review
+                </div>
+                
+                <div class="feedback-panel">
+                    <div class="feedback-header">
+                        <h3><i class="fas fa-comments"></i> Share Your Experience</h3>
+                        <button class="feedback-close" id="feedbackClose" title="Cancel"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="feedback-form">
+                        <div class="feedback-stars" id="feedbackStars">
+                            <i class="fas fa-star" data-v="1"></i>
+                            <i class="fas fa-star" data-v="2"></i>
+                            <i class="fas fa-star" data-v="3"></i>
+                            <i class="fas fa-star" data-v="4"></i>
+                            <i class="fas fa-star" data-v="5"></i>
+                        </div>
+                        <input type="text" id="feedbackName" placeholder="Your name (optional)" maxlength="50">
+                        <textarea id="feedbackMsg" placeholder="Share your experience..." maxlength="300" rows="3"></textarea>
+                        <div class="feedback-form-footer">
+                            <span id="feedbackCharCount">0/300</span>
+                            <button id="feedbackSubmit"><i class="fas fa-paper-plane"></i> Send Review</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Footer (dark) ─────────────────────────────────────── -->
+<footer class="footer-new" id="contact">
+...
+
+<!-- ── Footer (dark) ─────────────────────────────────────── -->
+<footer class="footer-new" id="contact">
+    <div class="footer-grid-new">
+        <div>
+            <a href="#top" class="brand" style="color:#fff;display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:17px">
+                <span class="brand-mark">E</span>asy Find
+            </a>
+            <p class="footer-tag-new">Seamless property hunting, verified listings, and expert real-estate management — rooted in Enugu.</p>
+            <div class="socials-new">
+                <a href="https://x.com/Easy_FindNG" aria-label="X" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://wa.me/2347035932876" aria-label="WhatsApp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="mailto:info@easyfind.com.ng" aria-label="Email" target="_blank"><i class="fa-regular fa-envelope"></i></a>
+            </div>
+        </div>
+        <div>
+            <h4>Marketplace</h4>
+            <a href="#available-homes">Verified Properties</a>
+            <a href="#about">About the Platform</a>
+            <a href="/contact">Contact Support</a>
+        </div>
+        <div>
+            <h4>Agents &amp; Partners</h4>
+            <a href="/login-agent">Agent Registration</a>
+            <a >Identity Verification (KYC)</a>
+            <a >Property Boosting</a>
+        </div>
+        <div>
+            <h4>Regional Focus</h4>
+            <a >Enugu Real Estate</a>
+            <a >Urban Residential</a>
+            <a >Commercial Properties</a>
+        </div>
+    </div>
+    <div class="footer-bottom-new">
+        <span>&copy; 2026 Easy Find Marketplace. Rooted in trust, refined through time.</span>
+        <span><a href="/terms">Terms</a> &middot; <a href="/contact">Contact</a></span>
+    </div>
+</footer>
+
+<!-- ── Realtime Toast Container ──────────────────────────── -->
+<div id="realtime-toast-container"></div>
+
+<!-- ── Cookie Banner ─────────────────────────────────────── -->
+<div class="cookie-banner" id="cookie" aria-hidden="true">
+    <div class="cookie-inner-new">
+        <p>We use cookies to improve your experience and remember your preferences. By continuing, you agree to our <a href="/terms">Terms of Service</a>.</p>
+        <div class="cookie-cta-new">
+            <button class="btn-cookie" id="cookieDecline">Decline</button>
+            <button class="btn-cookie btn-cookie-accept" id="cookieAccept">Accept</button>
+        </div>
+    </div>
+</div>
+
+</main>
+
+<!-- ── Scripts ────────────────────────────────────────────── -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer onload="initGoogleSignIn()"></script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init({ publicKey: "70lYopHB9mhxod8Pz" });
+   })();
+</script>
+<script src="logic/alert-box.js"></script>
+<script src="logic/logic.js"></script>
+<script src="logic/our-agent.js"></script>
+
+<script>
+'use strict';
+
+// ── Preloader hide ─────────────────────────────────────────
+(function(){
+    const pre = document.getElementById('preloader');
+    if (!pre) return;
+    window.addEventListener('load', function() {
+        setTimeout(function(){ pre.classList.add('hide'); }, 2200);
+    });
+})();
+
+// ── Nav scroll shadow ──────────────────────────────────────
+(function(){
+    const nav = document.getElementById('nav');
+    if (!nav) return;
+    window.addEventListener('scroll', function(){
+        nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+})();
+
+// ── Reveal on scroll ──────────────────────────────────────
+(function(){
+    const revealEls = document.querySelectorAll('.reveal');
+    if (!revealEls.length) return;
+    const obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+            if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+        });
+    }, { threshold: 0.12 });
+    revealEls.forEach(function(el){ obs.observe(el); });
+})();
+
+// ── Stats counter animation ────────────────────────────────
+(function(){
+    const counters = document.querySelectorAll('[data-count]');
+    if (!counters.length) return;
+    const obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+            if (!e.isIntersecting) return;
+            const el = e.target;
+            const target = parseInt(el.dataset.count, 10);
+            const duration = 1800;
+            const step = Math.ceil(target / (duration / 16));
+            let current = 0;
+            const timer = setInterval(function(){
+                current = Math.min(current + step, target);
+                el.textContent = current >= 1000 ? (current/1000).toFixed(current % 1000 === 0 ? 0 : 1) + 'k+' : current + (target >= 100 ? '+' : '');
+                if (current >= target) clearInterval(timer);
+            }, 16);
+            obs.unobserve(el);
+        });
+    }, { threshold: 0.3 });
+    counters.forEach(function(c){ obs.observe(c); });
+})();
+
+// ── Cookie banner ──────────────────────────────────────────
+(function(){
+    const banner = document.getElementById('cookie');
+    if (!banner) return;
+    if (!localStorage.getItem('cookieConsent')) {
+        setTimeout(function(){ banner.classList.add('show'); banner.style.display = 'block'; }, 1500);
+    }
+    const accept = document.getElementById('cookieAccept');
+    const decline = document.getElementById('cookieDecline');
+    function dismiss() { banner.classList.remove('show'); setTimeout(function(){ banner.style.display='none'; }, 400); }
+    if (accept) accept.addEventListener('click', function(){ localStorage.setItem('cookieConsent','accepted'); dismiss(); });
+    if (decline) decline.addEventListener('click', function(){ localStorage.setItem('cookieConsent','declined'); dismiss(); });
+})();
+
+// ── About eyebrow style helper ─────────────────────────────
+(function(){
+    const eyebrows = document.querySelectorAll('.eyebrow-tag');
+    eyebrows.forEach(function(el){
+        el.style.cssText = 'display:inline-block;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--primary-dark);background:var(--primary-light);padding:6px 12px;border-radius:999px;margin-bottom:14px';
+    });
+})();
+</script>
+
+</body>
+</html>

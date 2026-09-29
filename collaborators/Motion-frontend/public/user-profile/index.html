@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile — EasyFind Nigeria</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="icon" type="image/x-icon" href="/logo/logo.JPEG" />
+  <style>
+    /* ── Variables ─────────────────────────────────────────── */
+    :root {
+      --brand:      #103e3c;
+      --accent:     #8df7ff;
+      --accent-dk:  #055361;
+      --bg:         #f4f6f8;
+      --card:       #ffffff;
+      --text:       #1a1a1a;
+      --muted:      #666;
+      --border:     #e5e7eb;
+      --danger:     #ef4444;
+      --radius:     16px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg:     #0e0e0e;
+        --card:   #1a1a1a;
+        --text:   #f0f0f0;
+        --muted:  #999;
+        --border: #2a2a2a;
+      }
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+
+    body { background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* ── Top bar ───────────────────────────────────────────── */
+    .top-bar {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky; top: 0; z-index: 10;
+    }
+    .top-bar-left { display: flex; align-items: center; gap: 10px; }
+    .back-btn {
+      background: none; border: none; font-size: 18px;
+      color: var(--brand); cursor: pointer; padding: 4px 8px;
+      border-radius: 8px; transition: background .2s;
+    }
+    .back-btn:hover { background: var(--bg); }
+    .page-title { font-size: 17px; font-weight: 700; color: var(--text); }
+    .logout-btn {
+      background: none; border: 1px solid var(--border);
+      color: var(--muted); font-size: 13px; font-weight: 600;
+      padding: 7px 14px; border-radius: 10px; cursor: pointer;
+      display: flex; align-items: center; gap: 6px; transition: all .2s;
+    }
+    .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+    /* ── Page wrapper ──────────────────────────────────────── */
+    .page { max-width: 520px; margin: 32px auto; padding: 0 16px 80px; }
+
+    /* ── Avatar card ───────────────────────────────────────── */
+    .avatar-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 32px 24px 24px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .avatar-wrap {
+      position: relative;
+      width: 96px; height: 96px;
+      margin: 0 auto 14px;
+    }
+    .avatar {
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      background: var(--accent-dk);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px; font-weight: 800;
+      overflow: hidden;
+      border: 3px solid var(--accent);
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Camera button overlaid on avatar */
+    .avatar-edit-btn {
+      position: absolute; bottom: 2px; right: 2px;
+      width: 28px; height: 28px;
+      background: var(--brand); color: var(--accent);
+      border: 2px solid var(--card);
+      border-radius: 50%; font-size: 12px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: transform .2s;
+    }
+    .avatar-edit-btn:hover { transform: scale(1.1); }
+    #pfpInput { display: none; }
+
+    .upload-progress {
+      width: 96px; height: 4px; background: var(--border);
+      border-radius: 4px; margin: 0 auto 10px; display: none;
+      overflow: hidden;
+    }
+    .upload-progress-bar {
+      height: 100%; width: 0%;
+      background: var(--accent-dk);
+      transition: width .3s ease;
+    }
+
+    .user-display-name {
+      font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 4px;
+    }
+    .user-email {
+      font-size: 13px; color: var(--muted);
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(13,112,104,.12); color: var(--brand);
+      font-size: 11px; font-weight: 700; padding: 3px 10px;
+      border-radius: 20px; margin-top: 8px;
+    }
+
+    /* ── Section card ──────────────────────────────────────── */
+    .section-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .section-card h3 {
+      font-size: 13px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .06em;
+      color: var(--muted); margin-bottom: 16px;
+    }
+
+    /* ── Form field ────────────────────────────────────────── */
+    .field { margin-bottom: 16px; }
+    .field label {
+      display: block; font-size: 12px; font-weight: 600;
+      color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .04em;
+    }
+    .field-row {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .field-row input {
+      flex: 1; padding: 10px 14px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 10px; font-size: 14px; color: var(--text);
+      outline: none; transition: border .2s;
+    }
+    .field-row input:focus { border-color: var(--accent-dk); }
+    .field-row input:disabled { opacity: .6; cursor: not-allowed; }
+
+    .edit-btn {
+      background: none; border: 1px solid var(--border);
+      color: var(--brand); font-size: 13px; font-weight: 600;
+      padding: 8px 14px; border-radius: 10px; cursor: pointer;
+      white-space: nowrap; transition: all .2s;
+    }
+    .edit-btn:hover { background: var(--brand); color: var(--accent); border-color: var(--brand); }
+
+    .save-btn {
+      background: var(--brand); color: var(--accent);
+      border: none; font-size: 13px; font-weight: 700;
+      padding: 8px 16px; border-radius: 10px; cursor: pointer;
+      display: none; transition: opacity .2s;
+    }
+    .save-btn:hover { opacity: .85; }
+    .cancel-btn {
+      background: none; border: 1px solid var(--border);
+      color: var(--muted); font-size: 13px; font-weight: 600;
+      padding: 8px 12px; border-radius: 10px; cursor: pointer;
+      display: none;
+    }
+
+    /* ── Stats row ─────────────────────────────────────────── */
+    .stats-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin-bottom: 16px;
+    }
+    .stat-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 16px; text-align: center;
+    }
+    .stat-value { font-size: 24px; font-weight: 800; color: var(--brand); }
+    .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    /* ── Toast ─────────────────────────────────────────────── */
+    #toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: #1a1a1a; color: #fff;
+      padding: 11px 22px; border-radius: 30px;
+      font-size: 14px; font-weight: 500;
+      opacity: 0; transition: opacity .3s; pointer-events: none;
+      z-index: 999; white-space: nowrap;
+    }
+    #toast.show { opacity: 1; }
+    #toast.error { background: var(--danger); }
+
+    /* ── Loading skeleton ──────────────────────────────────── */
+    .skeleton {
+      background: linear-gradient(90deg, var(--border) 25%, var(--bg) 50%, var(--border) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 8px;
+    }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <button class="back-btn" onclick="history.back()">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+      <span class="page-title">My Profile</span>
+    </div>
+    <button class="logout-btn" onclick="handleLogout()">
+      <i class="fa-solid fa-right-from-bracket"></i> Sign out
+    </button>
+  </div>
+
+  <div class="page">
+
+    <!-- Avatar card -->
+    <div class="avatar-card">
+      <div class="avatar-wrap">
+        <div class="avatar" id="avatarEl">
+          <span id="avatarInitial">?</span>
+        </div>
+        <label class="avatar-edit-btn" for="pfpInput" title="Change photo">
+          <i class="fa-solid fa-camera"></i>
+        </label>
+        <input type="file" id="pfpInput" accept="image/jpeg,image/png,image/webp" onchange="uploadProfilePicture(event)" />
+      </div>
+      <div class="upload-progress" id="uploadProgress">
+        <div class="upload-progress-bar" id="uploadProgressBar"></div>
+      </div>
+      <div class="user-display-name" id="displayName">Loading...</div>
+      <div class="user-email" id="displayEmail">—</div>
+      <div class="badge"><i class="fa-solid fa-circle-check"></i> Verified with Google</div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-value" id="statLogins">—</div>
+        <div class="stat-label">Total Logins</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statJoined">—</div>
+        <div class="stat-label">Member Since</div>
+      </div>
+    </div>
+
+    <!-- Edit name -->
+    <div class="section-card">
+      <h3>Account Details</h3>
+
+      <div class="field">
+        <label>Full Name</label>
+        <div class="field-row">
+          <input type="text" id="nameInput" disabled placeholder="Your name" />
+          <button class="edit-btn"   id="nameEditBtn"   onclick="enableNameEdit()">Edit</button>
+          <button class="save-btn"   id="nameSaveBtn"   onclick="saveName()">Save</button>
+          <button class="cancel-btn" id="nameCancelBtn" onclick="cancelNameEdit()">Cancel</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Email Address</label>
+        <div class="field-row">
+          <input type="email" id="emailInput" disabled placeholder="—" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile picture section -->
+    <div class="section-card">
+      <h3>Profile Picture</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">
+        Upload a JPEG, PNG or WebP image (max 6 MB). It will be optimised automatically.
+      </p>
+      <label for="pfpInput" style="
+        display:inline-flex; align-items:center; gap:8px; cursor:pointer;
+        background:var(--brand); color:var(--accent); border:none;
+        padding:10px 18px; border-radius:10px; font-size:14px; font-weight:700;
+      ">
+        <i class="fa-solid fa-cloud-arrow-up"></i> Upload new photo
+      </label>
+    </div>
+
+  </div><!-- /.page -->
+
+  <div id="toast"></div>
+
+  <script>
+    let originalName = '';
+
+    // ── Load profile ──────────────────────────────────────────────────────
+    async function loadProfile() {
+      try {
+        const res  = await fetch('/api/user/profile');
+        const data = await res.json();
+
+        if (res.status === 401 || data.success === false) {
+          // Not logged in — redirect to AI page which has the login modal
+          window.location.href = '/easyfind-ai';
+          return;
+        }
+
+        const user = data;
+
+        // Avatar
+        const avatarEl = document.getElementById('avatarEl');
+        if (user.profilePicture) {
+          avatarEl.innerHTML = `<img src="${user.profilePicture}" alt="avatar">`;
+        } else {
+          document.getElementById('avatarInitial').textContent = (user.name || 'U')[0].toUpperCase();
+        }
+
+        // Text fields
+        originalName = user.name || '';
+        document.getElementById('displayName').textContent  = user.name  || 'No name set';
+        document.getElementById('displayEmail').textContent = user.email || '—';
+        document.getElementById('nameInput').value          = user.name  || '';
+        document.getElementById('emailInput').value         = user.email || '';
+
+        // Stats
+        document.getElementById('statLogins').textContent = user.loginCount ?? '—';
+        if (user.registrationDate) {
+          const d = new Date(user.registrationDate);
+          document.getElementById('statJoined').textContent =
+            d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+        }
+
+      } catch (err) {
+        showToast('Failed to load profile', true);
+      }
+    }
+
+    // ── Name editing ──────────────────────────────────────────────────────
+    function enableNameEdit() {
+      document.getElementById('nameInput').disabled = false;
+      document.getElementById('nameInput').focus();
+      document.getElementById('nameEditBtn').style.display   = 'none';
+      document.getElementById('nameSaveBtn').style.display   = 'inline-flex';
+      document.getElementById('nameCancelBtn').style.display = 'inline-flex';
+    }
+
+    function cancelNameEdit() {
+      document.getElementById('nameInput').value    = originalName;
+      document.getElementById('nameInput').disabled = true;
+      document.getElementById('nameEditBtn').style.display   = 'inline-flex';
+      document.getElementById('nameSaveBtn').style.display   = 'none';
+      document.getElementById('nameCancelBtn').style.display = 'none';
+    }
+
+    async function saveName() {
+      const name = document.getElementById('nameInput').value.trim();
+      if (!name || name.length < 2) { showToast('Name must be at least 2 characters', true); return; }
+
+      document.getElementById('nameSaveBtn').textContent = 'Saving...';
+      try {
+        const res  = await fetch('/api/user/profile', {
+          method:  'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ name })
+        });
+        const data = await res.json();
+        if (data.success) {
+          originalName = name;
+          document.getElementById('displayName').textContent = name;
+          cancelNameEdit();
+          showToast('Name updated ✓');
+        } else {
+          showToast(data.message || 'Update failed', true);
+        }
+      } catch (_) {
+        showToast('Network error', true);
+      } finally {
+        document.getElementById('nameSaveBtn').textContent = 'Save';
+      }
+    }
+
+    // ── Profile picture upload ────────────────────────────────────────────
+    async function uploadProfilePicture(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      if (file.size > 6 * 1024 * 1024) { showToast('Image too large (max 6 MB)', true); return; }
+
+      const progress    = document.getElementById('uploadProgress');
+      const progressBar = document.getElementById('uploadProgressBar');
+      progress.style.display = 'block';
+      progressBar.style.width = '30%';
+
+      const formData = new FormData();
+      formData.append('profilePicture', file);
+
+      try {
+        progressBar.style.width = '60%';
+        const res  = await fetch('/api/user/profile/picture', { method: 'POST', body: formData });
+        const data = await res.json();
+        progressBar.style.width = '100%';
+
+        if (data.success) {
+          const avatarEl = document.getElementById('avatarEl');
+          avatarEl.innerHTML = `<img src="${data.profilePicture}?t=${Date.now()}" alt="avatar">`;
+          showToast('Profile picture updated ✓');
+        } else {
+          showToast(data.message || 'Upload failed', true);
+        }
+      } catch (_) {
+        showToast('Upload failed', true);
+      } finally {
+        setTimeout(() => {
+          progress.style.display  = 'none';
+          progressBar.style.width = '0%';
+        }, 800);
+        event.target.value = '';
+      }
+    }
+
+    // ── Logout ────────────────────────────────────────────────────────────
+    async function handleLogout() {
+      await fetch('/api/logout', { method: 'POST' });
+      window.location.href = '/';
+    }
+
+    // ── Toast ─────────────────────────────────────────────────────────────
+    let toastTimer;
+    function showToast(msg, isError = false) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.className   = 'show' + (isError ? ' error' : '');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => { el.className = ''; }, 3000);
+    }
+
+    // ── Init ──────────────────────────────────────────────────────────────
+    loadProfile();
+  </script>
+</body>
+</html>

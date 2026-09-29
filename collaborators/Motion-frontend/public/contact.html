@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy find_Contact us</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/logo/logo.JPEG">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        footer {
+            text-align: center;
+            padding: 22px 0px;
+            background: #fff;
+            color: #888;
+            border-top: 1px solid #e0f0f0;
+            margin-top: 40px;
+        }
+    </style>
+    <!-- OneSignal Web Push -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script src="/onesignal-init.js" defer></script>
+</head>
+<body>
+
+    <header>
+         <a href="/" class="brand"><span class="brand-mark">E</span>asy Find</a>
+         <nav class="links">
+             <a href="/">Home</a>
+             <a href="/properties">Search</a>
+             <a href="/#about">About</a>
+             <a href="/#available-homes">Available properties</a>
+             <a href="/contact">Contact us</a>
+         </nav>
+
+            <div class="nav2" id="nav2">
+               <div class="top-nav">
+                   <a href="/" class="brand"><span class="brand-mark">E</span>asy Find</a>
+               </div>
+               <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+               <a href="/properties"><i class="fa-solid fa-magnifying-glass"></i> Search</a>
+               <a href="/#about"><i class="fa-regular fa-address-card"></i> About</a>
+               <a href="/#available-homes"><i class="fa-solid fa-building"></i> Available properties</a>
+               <a href="/contact"><i class="fa-solid fa-envelope"></i> Contact us</a>
+            </div>
+
+            <div class="hamburger" id="hamburger">
+              <div id="hand" class="hand"></div>
+              <div id="hand" class="hand"></div>
+              <div id="hand" class="hand"></div>
+            </div>
+    </header>
+    <div id="log-alert"></div>
+<section class="contact-section" id="contact">
+    <div class="contact-container">
+        
+        <!-- Contact Badge -->
+        <div class="contact-badge">
+            <span class="badge-icon"><i class="fa-solid fa-envelope"></i></span>
+            <span class="badge-text">Get In Touch</span>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="contact-info">
+            <h2>Contact Us</h2>
+            <p class="contact-subtitle">We're always here to assist you. Reach out to us through any of the channels below.</p>
+
+            <!-- Info Cards -->
+            <div class="info-cards">
+                <div class="info-card">
+                    <div class="card-icon phone-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4>Call Us</h4>
+                        <p>Call us for inquiries, support, or partnership opportunities.</p>
+                        <a href="tel:+2347035932876" class="contact-link">+234 703 5932 876</a>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-icon email-icon">
+                        <i class="fa-regular fa-message"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4>Email Us</h4>
+                        <p>Send us an email and our support team will respond within minutes.</p>
+                        <a href="mailto:info@easyfind.com.ng" class="contact-link">info@easyfind.com.ng</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="social-links-section">
+                <h4>Follow Us</h4>
+                <div class="info-link">
+                    <a href="https://x.com/Easy_FindNG" class="social-icon x" target="_blank">
+                        <img src="icon/x-icon.png" loading="lazy" alt="X">
+                    </a>
+                    <a href="https://wa.me/2347042648065" class="social-icon whatsapp" target="_blank">
+                        <img src="icon/whatsapp icon.png" loading="lazy" alt="WhatsApp">
+                    </a>
+                    <a href="" class="social-icon email" target="_blank">
+                        <img src="icon/email icon.png" loading="lazy" alt="Email">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <form class="contact-form">
+            <div class="form-header">
+                <h2>Send a Message</h2>
+                <p>Fill out the form below and we'll get back to you shortly</p>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="name">
+                        <i class="fas fa-user"></i> Full Name
+                    </label>
+                    <input id="name" type="text" placeholder="Enter Your Name" required>
+                    <div id="name-err" class="error-message"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i> Email Address
+                    </label>
+                    <input id="email" type="email" placeholder="Enter Your Email" required>
+                    <div id="email-err" class="error-message"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="subjet">
+                        <i class="fas fa-tag"></i> Subject
+                    </label>
+                    <input id="subjet" type="text" placeholder="Subject">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone-number">
+                        <i class="fas fa-phone"></i> Phone Number
+                    </label>
+                    <input id="phone-number" type="tel" placeholder="Enter your phone number">
+                    <div id="phone-err" class="error-message"></div>
+                </div>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="text">
+                    <i class="fas fa-comment-dots"></i> Your Message
+                </label>
+                <textarea id="text" placeholder="Your Message" required></textarea>
+                <div id="text-err" class="error-message"></div>
+            </div>
+
+            <button id="submit" type="submit" class="submit-btn">
+                <span class="btn-text">Send Message</span>
+                <span class="btn-icon">→</span>
+            </button>
+        </form>
+
+    </div>
+</section>
+<footer>
+    <p>&copy; 2026 <a href="/" class="footer-link">Easy Find</a>. All rights reserved. | <a href="/terms" class="footer-link">Terms of Service</a></p>
+</footer>
+<script>
+
+
+    //nav
+    const nav2 = document.getElementById("nav2");
+    const hamburger = document.getElementById("hamburger");
+    const navX = document.getElementById('navX');
+
+    hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        nav2.classList.toggle('active');
+        hamburger.classList.toggle('active');
+    });
+
+    // Close nav when clicking outside
+    window.addEventListener('click', (e) => {
+        //close nav2 logic
+        if (!hamburger.contains(e.target)) {
+            hamburger.classList.remove('active');
+            nav2.classList.remove('active');
+        }
+    });
+    const logAlert = document.getElementById('log-alert');
+    // Show alert function
+    function showLoginAlert(message, type = 'info') {
+        if (logAlert) {
+            logAlert.textContent = message;
+            logAlert.className = `show ${type}`;
+            setTimeout(() => {
+                logAlert.classList.remove('show');
+            }, 3000);
+        }
+    }
+    // Message input Validation
+    const contactAlertBox = document.getElementById('alert');
+
+    const submitBtn = document.getElementById('submit');
+
+    submitBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const nameErr = document.getElementById('name-err');
+        const email = document.getElementById('email').value;
+        const emailErr = document.getElementById('email-err');
+        const subjet = document.getElementById('subjet').value;
+        const text = document.getElementById('text').value;
+        const textErr = document.getElementById('text-err');
+        const phoneNumber = document.getElementById('phone-number').value;
+        const phoneErr = document.getElementById('phone-err');
+
+        nameErr.style.color = 'red';
+        emailErr.style.color = 'red';
+        textErr.style.color = 'red';
+        phoneErr.style.color = 'red';
+        nameErr.textContent = ''
+        emailErr.textContent = ''
+        textErr.textContent = ''
+        phoneErr.textContent = ''
+
+        let valid = true;
+
+        if (name.length < 1) {
+            nameErr.textContent = 'Enter Your name';
+            valid = false
+        } else if (name.length < 4) {
+            nameErr.textContent = 'Your name must be at least more than 4 Characters';
+            valid = false
+        }
+
+        let emalValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (email === "") {
+            emailErr.textContent = 'Enter Your email';
+            valid = false
+        } else if (!emalValidation.test(email)) {
+            emailErr.textContent = 'Enter a valid email';
+            valid = false
+        }
+
+        if (text.length < 1) {
+            textErr.textContent = 'Make a statement';
+            valid = false
+        } else if (text.length < 10) {
+            textErr.textContent = 'Your statement must be at least 4 words';
+            valid = false
+        }
+
+        if (phoneNumber.length === 0) {
+            phoneErr.textContent = 'Enter Your number';
+            valid = false
+        } else if (phoneNumber.length != 11) {
+            phoneErr.textContent = 'Your number must be 11 digits';
+            valid = false
+        }
+
+        if (valid) {
+            // Show loading state
+            const submitButton = document.getElementById('submit');
+            const originalButtonText = submitButton.innerHTML;
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span class="btn-text">Sending...</span>';
+
+            // Send to backend API (saves to admin inbox)
+            fetch('/api/contact/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    name: name,
+                    email: email,
+                    subjet: subjet,
+                    phoneNumber: phoneNumber,
+                    text: text
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Also send via EmailJS (optional - for email notifications)
+                    emailjs.send("service_2gmwz4n", "template_ta3lzir", {
+                        from_name: name,
+                        from_email: email,
+                        from_subjet: subjet,
+                        from_number: phoneNumber,
+                        from_text: text
+                    }).catch(err => console.log('EmailJS error:', err));
+
+                    showLoginAlert('Message sent successful.', 'success');
+                    document.querySelector('.contact-form').reset();
+                } else {
+                    showLoginAlert('Message failed. Please try again.', 'error');
+                }
+            })
+            .catch((err) => {
+                console.error('Error sending message:', err);
+                showLoginAlert('Network error. Please check your internet.', 'error');
+            })
+            .finally(() => {
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText;
+            });
+        }
+
+    });
+</script>
+</body>
+</html>

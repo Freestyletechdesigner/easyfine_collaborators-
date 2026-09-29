@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Login - Easy Find</title>
+    <link rel="icon" type="image/x-icon" href="/logo/logo.JPEG">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: radial-gradient(circle at 10% 20%, rgba(4, 84, 69, 1) 0%, rgba(2, 43, 35, 1) 90%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 12px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            max-width: 1080px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 43% 57%;
+            min-height: 680px;
+            animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* LEFT SIDE PANEL - BRANDING */
+        .login-left {
+            background: linear-gradient(135deg, #02473b 0%, #012b24 100%);
+            padding: 60px 45px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-left::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at top right, rgba(102, 234, 234, 0.15), transparent 60%);
+            z-index: -1;
+        }
+
+        .brand-wrapper h1 {
+            font-size: 38px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            background: linear-gradient(to right, #ffffff, #a2f3e5);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-wrapper p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #9fcfc5;
+            margin-bottom: 40px;
+        }
+
+        .features {
+            list-style: none;
+        }
+
+        .features li {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 15px;
+            color: #e4f5f2;
+            transition: transform 0.2s ease;
+        }
+
+        .features li:hover {
+            transform: translateX(5px);
+        }
+
+        .features li i {
+            font-size: 18px;
+            color: #66eaea;
+            background: rgba(102, 234, 234, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .left-footer {
+            font-size: 13px;
+            color: #6da398;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 20px;
+            margin-top: 30px;
+        }
+
+        /* RIGHT SIDE PANEL - FORM CONTROLS */
+        .login-right {
+            padding: 60px 65px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #ffffff;
+        }
+
+        .login-header {
+            margin-bottom: 35px;
+        }
+
+        .login-header h2 {
+            font-size: 32px;
+            color: #111827;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-weight: 600;
+            font-size: 13.5px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i.fa-lock,
+        .input-wrapper i.fa-envelope {
+            position: absolute;
+            left: 16px;
+            color: #9ca3af;
+            font-size: 16px;
+            pointer-events: none;
+            transition: color 0.3s ease;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 16px 15px 48px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 14px;
+            font-size: 15px;
+            transition: all 0.25s ease;
+            background: #f9fafb;
+            color: #111827;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #27a594;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(39, 165, 148, 0.12);
+        }
+
+        .form-group input:focus + i {
+            color: #27a594;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            cursor: pointer;
+            color: #9ca3af;
+            font-size: 16px;
+            z-index: 10;
+            padding: 4px;
+            transition: color 0.2s ease;
+        }
+
+        .password-toggle:hover {
+            color: #27a594;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .forgot-password {
+            color: #27a594;
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .forgot-password:hover {
+            color: #02502c;
+            text-decoration: underline;
+        }
+
+        #googleBtn {
+            width: 100%;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #27a594 0%, #05594a 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(39, 165, 148, 0.25);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(39, 165, 148, 0.35);
+            background: linear-gradient(135deg, #2cbfa9 0%, #066958 100%);
+        }
+
+        .btn-login:active {
+            transform: translateY(1px);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 24px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background: #f0f2f5;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 16px;
+            color: #9ca3af;
+            font-size: 13px;
+            font-weight: 500;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        .signup-link a {
+            color: #27a594;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+            color: #02502c;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .back-home a {
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .back-home a:hover {
+            color: #111827;
+        }
+
+        .alert {
+            position: fixed;
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            top: 10%;
+            display: none;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 115;
+            animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .alert.success {
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .alert.error {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        /* ==========================================
+           RESPONSIVE LAYOUT ENGINE (MOBILE STACKING)
+           ========================================== */
+        @media (max-width: 900px) {
+            .login-container {
+                grid-template-columns: 1fr; /* Stacks layout into single column vertically */
+                min-height: auto;
+                max-width: 520px;
+                border-radius: 20px;
+            }
+            .login-left {
+                padding: 40px 35px 30px 35px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .brand-wrapper h1 {
+                font-size: 28px;
+                margin-bottom: 10px;
+            }
+            .brand-wrapper p {
+                margin-bottom: 20px;
+                font-size: 14px;
+            }
+            .features li {
+                margin-bottom: 12px;
+                font-size: 14px;
+            }
+            .features li i {
+                width: 32px;
+                height: 32px;
+                padding: 6px;
+                font-size: 15px;
+            }
+            .left-footer {
+                display: none; /* Sub-footer hidden on mobile to avoid duplication */
+            }
+            .login-right {
+                padding: 40px 35px;
+            }
+            .login-header h2 {
+                font-size: 26px;
+            }
+        }
+
+        /* COMPACT / SMALL DEVICE ENGINE ACCELERATION (e.g., iPhone 6s) */
+        @media (max-width: 400px) {
+            body {
+                padding: 10px 8px;
+            }
+            .login-container {
+                border-radius: 16px;
+            }
+            .login-left {
+                padding: 30px 20px 20px 20px; /* Highly optimized micro paddings */
+            }
+            .brand-wrapper h1 {
+                font-size: 23px;
+            }
+            .brand-wrapper p {
+                font-size: 13px;
+                margin-bottom: 15px;
+            }
+            .features li {
+                font-size: 13px;
+                gap: 10px;
+            }
+            .login-right {
+                padding: 30px 18px;
+            }
+            .login-header {
+                margin-bottom: 24px;
+                text-align: center;
+            }
+            .login-header h2 {
+                font-size: 23px;
+            }
+            .login-header p {
+                font-size: 13px;
+            }
+            .form-group input {
+                padding: 13px 14px 13px 44px;
+                font-size: 14.5px;
+            }
+            .input-wrapper i.fa-lock, 
+            .input-wrapper i.fa-envelope {
+                left: 14px;
+            }
+            .btn-login {
+                padding: 13px;
+                font-size: 15px;
+            }
+            .divider {
+                margin: 18px 0;
+            }
+        }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK9XVCBPJM"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+    
+          gtag('config', 'G-NK9XVCBPJM');
+        </script>
+        <!-- OneSignal Web Push -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script src="/onesignal-init.js" defer></script>
+</head>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="login-left">
+            <div class="brand-wrapper">
+                <h1>Welcome Back, Agent!</h1>
+                <p>Login to access your agent dashboard and manage your property listings seamlessly.</p>
+                
+                <ul class="features">
+                    <li><i class="fa-solid fa-house-chimney"></i> Manage your property listings</li>
+                    <li><i class="fa-solid fa-comments"></i> Track client inquiries</li>
+                    <li><i class="fa-solid fa-chart-line"></i> View analytics and reports</li>
+                    <li><i class="fa-solid fa-user-gear"></i> Update your business profile</li>
+                </ul>
+            </div>
+            <div class="left-footer">
+                <p>&copy; 2026 Easy Find Inc. All rights reserved.</p>
+            </div>
+        </div>
+
+        <div class="login-right">
+            <div class="login-header">
+                <h2>Agent Login</h2>
+                <p>Enter your credentials to access your dashboard</p>
+            </div>
+
+            <div id="alert" class="alert"></div>
+
+            <form id="agent-login-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="email" name="email" placeholder="agent@example.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        <i class="fa-solid fa-eye password-toggle" id="toggle-password"></i>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <a href="/password-reset/forgot-password" class="forgot-password">Forgot Password?</a>
+                </div>
+
+                <div id="googleBtn"></div>
+                
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <button type="submit" id="login-btn" class="btn-login">Login to Dashboard</button>
+            </form>
+
+            <div class="signup-link">
+                <p>Don't have an account? <a href="/signup-agent">Register as Agent</a></p>
+            </div>
+
+            <div class="back-home">
+                <a href="/"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://accounts.google.com/gsi/client" async defer onload="initGoogleSignIn()"></script>
+    <script>
+        function initGoogleSignIn() {
+            const googleBtnContainer = document.getElementById('googleBtn');
+            if (googleBtnContainer && typeof google !== 'undefined') {
+                google.accounts.id.initialize({
+                    client_id: "764343023876-b1958h76nsded9q6letkmr05alihc5v1.apps.googleusercontent.com",
+                    callback: handleGoogleCredentialResponse,
+                    use_fedcm_for_prompt: false
+                });
+
+                // Calculate width parameters safely based on current device dimensions
+                const dynamicWidth = window.innerWidth <= 400 ? "280" : "320";
+
+                google.accounts.id.renderButton(
+                    googleBtnContainer,
+                    { theme: "outline", size: "large", width: dynamicWidth, text: "signin_with" }
+                );
+            }
+        }
+
+        async function handleGoogleCredentialResponse(googleResponse) {
+            const loginBtn = document.getElementById('login-btn');
+            if (loginBtn) {
+                loginBtn.disabled = true;
+                loginBtn.textContent = 'Authenticating with Google...';
+            }
+
+            try {
+                const response = await fetch('/api/agent/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ googleToken: googleResponse.credential })
+                });
+
+                const data = await response.json();
+                if (!data.success) {
+                    handleLoginResponse({ success: false, message: 'User not found, Register as Agent.' });
+                    setTimeout(() => {
+                        window.location.href = '/signup-agent';
+                    }, 700);
+                    return;
+                }
+                handleLoginResponse(data);
+
+            } catch (error) {
+                console.error('Google authorization error:', error);
+                handleLoginResponse({ success: false, message: 'Google authentication failed. Please try again.' });
+            }
+        }
+
+        function handleLoginResponse(data) {
+            const alertBox = document.getElementById('alert');
+            const loginBtn = document.getElementById('login-btn');
+            
+            if (!alertBox) return;
+
+            alertBox.textContent = data.message || (data.success ? 'Login successful! Redirecting...' : 'Invalid login details');
+            alertBox.className = `alert ${data.success ? 'success' : 'error'}`;
+            alertBox.style.display = 'block';
+
+            if (data.success) {
+                setTimeout(() => {
+                    window.location.href = '/agent-loged';
+                }, 1000);
+            } else if (data.inactive) {
+                setTimeout(() => {
+                    window.location.href = '/appeal';
+                }, 1000);
+            } else {
+                setTimeout(() => { alertBox.style.display = 'none'; }, 5000);
+                if (loginBtn) {
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Login to Dashboard';
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const togglePassword = document.getElementById('toggle-password');
+            const passwordInput = document.getElementById('password');
+
+            if (togglePassword && passwordInput) {
+                togglePassword.addEventListener('click', () => {
+                    const type = passwordInput.type === 'password' ? 'text' : 'password';
+                    passwordInput.type = type;
+                    togglePassword.classList.toggle('fa-eye');
+                    togglePassword.classList.toggle('fa-eye-slash');
+                });
+            }
+
+            const form = document.getElementById('agent-login-form');
+            if (form) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+                    const loginBtn = document.getElementById('login-btn');
+
+                    if (loginBtn) {
+                        loginBtn.disabled = true;
+                        loginBtn.textContent = 'Signing In...';
+                    }
+
+                    try {
+                        const response = await fetch('/api/agent/login', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            credentials: 'include',
+                            body: JSON.stringify({ email, password })
+                        });
+
+                        const data = await response.json();
+                        handleLoginResponse(data);
+
+                    } catch (error) {
+                        console.error('Login error:', error);
+                        handleLoginResponse({ success: false, message: 'An error occurred. Please try again.' });
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

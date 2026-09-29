@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Property Details – Easy Find</title>
+    <link rel="stylesheet" type="text/css" href="property.css">
+    <link rel="icon" type="image/x-icon" href="/logo/logo.JPEG">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK9XVCBPJM"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+    
+          gtag('config', 'G-NK9XVCBPJM');
+        </script>
+        <!-- OneSignal Web Push -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script src="/onesignal-init.js" defer></script>
+</head>
+</head>
+<body>
+
+<header>
+    <a href="/" class="brand"><span class="brand-mark">E</span>asy Find</a>
+    <div class="verify">Verified <i class="fa-regular fa-circle-check"></i></div>
+    <nav class="links">
+        <a href="/">Home</a>
+        <a href="/#search-bar">Search</a>
+        <a href="/#about">About</a>
+        <a href="/#available-home">Available Homes</a>
+        <a href="/our-agent">Our Agents</a>
+        <a href="/contact">Contact</a>
+    </nav>
+    <div class="nav2" id="nav2">
+        <div class="top-nav">
+            <a href="#top" class="brand"><span class="brand-mark">E</span>asy Find</a>
+        </div>
+        <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="/#search-bar"><i class="fa-solid fa-magnifying-glass"></i> Search</a>
+        <a href="/#about"><i class="fa-regular fa-address-card"></i> About</a>
+        <a href="#relatedSection"><i class="fa-solid fa-building"></i> Related Properties</a>
+        <a href="/our-agent"><i class="fa-solid fa-user-tie"></i> Our Agents</a>
+        <a href="/contact"><i class="fa-solid fa-envelope"></i> Contact</a>
+    </div>
+    <div class="hamburger" id="hamburger">
+        <div class="hand"></div>
+        <div class="hand"></div>
+        <div class="hand"></div>
+    </div>
+</header>
+
+<main>
+    <a class="back-page" href="javascript:history.back()">
+        <i class="fa-solid fa-arrow-left"></i> Back
+    </a>
+
+    <!-- IMAGE SLIDER -->
+    <section class="hero" id="heroSlider">
+        <div class="carousel">
+            <div class="carousel-track" id="holdImg">
+                <!-- slides injected by JS -->
+            </div>
+            <button class="prev" id="back">❮</button>
+            <button class="next" id="next">❯</button>
+        </div>
+        <div class="img-counter" id="imgCounter"></div>
+    </section>
+
+    <!-- PROPERTY INFO -->
+    <div class="property-layout">
+
+        <!-- LEFT COLUMN -->
+        <div class="prop-left">
+
+            <!-- Title & badges -->
+            <div class="prop-title-block section">
+                <div class="prop-badges">
+                    <span class="badge-category" id="badgeCategory"></span>
+                    <span class="badge-type" id="badgeType"></span>
+                </div>
+                <h1 id="propTitle">Loading...</h1>
+                <p class="prop-location" id="propLocation">
+                    <i class="fa-solid fa-location-dot"></i> —
+                </p>
+                <p class="prop-date" id="propDate">
+                    <i class="fa-regular fa-calendar"></i> —
+                </p>
+            </div>
+
+            <!-- Stats bar -->
+            <div class="prop-stats section">
+                <div class="stat-item">
+                    <i class="fa-solid fa-bed"></i>
+                    <span id="statBeds">—</span>
+                    <small>Bedrooms</small>
+                </div>
+                <div class="stat-item">
+                    <i class="fa-solid fa-bath"></i>
+                    <span id="statBaths">—</span>
+                    <small>Bathrooms</small>
+                </div>
+                <div class="stat-item">
+                    <i class="fa-solid fa-ruler-combined"></i>
+                    <span id="statArea">—</span>
+                    <small>plot</small>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="prop-section section">
+                <h2><i class="fa-solid fa-align-left"></i> Description</h2>
+                <p id="propDescription" class="prop-desc-text">—</p>
+            </div>
+
+            <!-- Features -->
+            <div class="prop-section section" id="featuresSection">
+                <h2><i class="fa-solid fa-star"></i> Features & Amenities</h2>
+                <div class="features-grid" id="featuresList"></div>
+            </div>
+
+            <!-- Map -->
+            <div class="prop-section section">
+                <h2><i class="fa-solid fa-map-location-dot"></i> Location on Map</h2>
+                <div class="hold-map">
+                    <iframe id="mapFrame" width="100%" height="100%"
+                        style="border:0;display:none;" loading="lazy" allowfullscreen
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="about:blank">
+                    </iframe>
+                </div>
+            </div>
+            <!-- Comments Section -->
+            <div class="prop-section section" id="commentsSection">
+                <h2><i class="fa-solid fa-comments"></i> Q&amp;A &amp; Discussion (<span id="commentCount">0</span>)</h2>
+                
+                <!-- Comment Submission Form -->
+                <div class="comment-form-container">
+                    <form id="propertyCommentForm" class="comment-form">
+                        <div class="comment-input-row">
+                            <input type="text" id="commentNameInput" placeholder="Your name (optional)" maxlength="50">
+                        </div>
+                        <div class="comment-input-row">
+                            <textarea id="commentTextInput" placeholder="Have a question or feedback about this property? Ask here..." maxlength="500" required rows="3"></textarea>
+                        </div>
+                        <div class="comment-form-footer">
+                            <span id="commentCharCounter">0/500</span>
+                            <button type="submit" id="commentSubmitBtn"><i class="fa-solid fa-paper-plane"></i> Post Comment</button>
+                        </div>
+                    </form>
+                </div>
+            
+                <!-- Comment Feed List -->
+                <div class="comments-list" id="commentsList">
+                    <!-- Dynamic comments injected here by JS -->
+                </div>
+            
+                <!-- Load More Button -->
+                <div class="comments-load-more" id="commentsLoadMore" style="display: none;">
+                    <button id="btnLoadMoreComments"><i class="fa-solid fa-plus"></i> Load More Comments</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="prop-right">
+
+            <!-- Price card -->
+            <div class="price-card section">
+                <p class="price-label">Listing Price</p>
+                <p class="price-value" id="propPrice">—</p>
+                <p class="price-sub" id="propPriceSub"></p>
+                <button class="btn-contact" id="btnContact">
+                    <i class="fas fa-phone"></i> Contact Agent
+                </button>
+                <button class="btn-share" id="sharePop">
+                    <i class="fa-solid fa-share-nodes"></i> Share Property
+                </button>
+                <button class="btn-report" id="reportPop">
+                    <i class="fa-solid fa-flag"></i> Report Property
+                </button>
+            </div>
+
+            <!-- Agent card -->
+            <div class="agent-card section" id="agentCard">
+                <h3>Listed By</h3>
+                <div class="agent-info">
+                    <div class="agent-avatar" id="agentAvatar">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div>
+                        <p class="agent-name" id="agentName">—</p>
+                        <p class="agent-role" id="agent-stand">_</p>
+                    </div>
+                    <div>
+                        <button id="agent-profile">View Profile</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick details -->
+            <div class="quick-details section">
+                <h3>Quick Details</h3>
+                <ul id="quickDetailsList">
+                    <li><span>Type</span><strong id="qdType">—</strong></li>
+                    <li><span>Category</span><strong id="qdCategory">—</strong></li>
+                    <li><span>Bedrooms</span><strong id="qdBeds">—</strong></li>
+                    <li><span>Bathrooms</span><strong id="qdBaths">—</strong></li>
+                    <li><span>Area</span><strong id="qdArea">—</strong></li>
+                    <li><span>Location</span><strong id="qdLocation">—</strong></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- CONTACT POPUP -->
+    <div class="contact-popup" id="contactPopup">
+        <div class="contact-popup-inner">
+            <button class="popup-close" id="popupClose"><i class="fa-solid fa-xmark"></i></button>
+            <h3>Contact Agent</h3>
+            <p>Reach out via any of the options below</p>
+            <div class="contact-options">
+                <a href="#" id="contactWhatsapp" class="contact-opt whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                </a>
+                <a href="#" id="contactEmail" class="contact-opt email">
+                    <i class="fa-regular fa-envelope"></i> Email
+                </a>
+                <a href="#" id="contactCall" class="contact-opt call">
+                    <i class="fas fa-phone"></i> Direct Call
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SHARE POPUP -->
+    <div class="hold-popshare" id="holdPopshare">
+        <div class="popshare">
+            <h3>Share Property</h3>
+            <div class="hold-share-btn">
+                <button class="share-btn" id="shareBtn">
+                    <i class="fa-solid fa-share-nodes"></i> Share Link
+                </button>
+                <button class="copy-btn" id="copyBtn">
+                    <i class="fa-regular fa-copy"></i> Copy Link
+                </button>
+            </div>
+            <button class="cancel-pop" id="cancelPop">Cancel</button>
+        </div>
+    </div>
+
+    <!-- REPORT POPUP -->
+    <div class="contact-popup" id="reportPopup">
+        <div class="contact-popup-inner" style="max-width: 420px; text-align: left; background: var(--card-bg, #fff);">
+            <button class="popup-close" id="reportPopupClose" style="position: absolute; top: 14px; right: 16px; background: none; border: none; font-size: 1.3rem; color: #aaa; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+            <h3 style="text-align: center; margin-bottom: 6px; color: #055361;">Report Property</h3>
+            <p style="text-align: center; margin-bottom: 20px; font-size: 0.9rem; color: #666;">Help us keep Easy Find safe. Tell us what is wrong with this listing.</p>
+            
+            <form id="reportForm" style="display: flex; flex-direction: column; gap: 14px;">
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label for="reportReason" style="font-weight: 700; font-size: 0.85rem; color: #055361;">Reason for Report *</label>
+                    <select id="reportReason" required style="padding: 11px; border-radius: 8px; border: 1.5px solid #e0faf9; font-size: 0.9rem; background: #fff; color: #333; outline: none; transition: border-color 0.2s;">
+                        <option value="" disabled selected>Select a reason</option>
+                        <option value="spam">Spam or misleading listing</option>
+                        <option value="incorrect_details">Incorrect property details</option>
+                        <option value="fraudulent">Fraudulent or suspicious poster</option>
+                        <option value="offensive">Offensive or abusive content</option>
+                        <option value="other">Other reason</option>
+                    </select>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label for="reportName" style="font-weight: 700; font-size: 0.85rem; color: #055361;">Your Name</label>
+                    <input type="text" id="reportName" placeholder="e.g. John Doe" style="padding: 11px; border-radius: 8px; border: 1.5px solid #e0faf9; font-size: 0.9rem; outline: none; transition: border-color 0.2s;">
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label for="reportEmail" style="font-weight: 700; font-size: 0.85rem; color: #055361;">Your Email Address *</label>
+                    <input type="email" id="reportEmail" required placeholder="e.g. john@example.com" style="padding: 11px; border-radius: 8px; border: 1.5px solid #e0faf9; font-size: 0.9rem; outline: none; transition: border-color 0.2s;">
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label for="reportDescription" style="font-weight: 700; font-size: 0.85rem; color: #055361;">Additional Details</label>
+                    <textarea id="reportDescription" rows="4" placeholder="Explain the problem in detail..." style="padding: 11px; border-radius: 8px; border: 1.5px solid #e0faf9; font-size: 0.9rem; outline: none; resize: vertical; font-family: inherit; transition: border-color 0.2s;"></textarea>
+                </div>
+                
+                <button type="submit" style="padding: 13px; background: #ff5252; color: white; border: none; border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: background 0.2s; margin-top: 10px;">
+                    Submit Report
+                </button>
+            </form>
+        </div>
+    </div>
+
+</main>
+
+<!-- RELATED PROPERTIES -->
+<section class="related-section" id="relatedSection">
+    <div class="related-header">
+        <h2><i class="fa-solid fa-layer-group"></i> Related Properties</h2>
+        <p>You might also like these</p>
+    </div>
+    <div class="related-grid" id="relatedGrid"></div>
+    <div class="related-more" id="relatedMore" style="display:none;">
+        <button class="btn-load-related" id="btnLoadMore">
+            <i class="fas fa-plus"></i> Load More
+        </button>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 <a href="/" class="footer-link">Easy Find</a>. All rights reserved. | <a href="/terms" class="footer-link">Terms of Service</a></p>
+</footer>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="property.js"></script>
+</body>
+</html>

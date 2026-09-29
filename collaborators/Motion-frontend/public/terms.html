@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service | Easy Find</title>
+    <link rel="icon" type="image/x-icon" href="/logo/logo.JPEG">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+
+        @font-face {
+          font-family: "HyperTrack";
+          src: url("fonts/Hyper-Track-BF6923fcf16dfa7.otf") format("opentype");
+          font-weight: normal;
+          font-style: normal;
+        }
+        @font-face {
+          font-family: "Logo";
+          src: url("fonts/LeagueSpartan-Bold.otf") format("opentype");
+          font-weight: normal;
+          font-style: normal;
+        }
+
+        /* === Tokens === */
+        :root{
+          --primary:#0d7068;
+          --primary-dark:#055361;
+          --primary-light:#e6f7f5;
+          --bg:#F8FAFC;
+          --white:#FFFFFF;
+          --text:#111827;
+          --muted:#6B7280;
+          --border:#E5E7EB;
+          --shadow-sm:0 1px 2px rgba(17,24,39,.06), 0 1px 3px rgba(17,24,39,.04);
+          --shadow-md:0 10px 24px rgba(17,24,39,.08);
+          --shadow-lg:0 24px 60px rgba(17,24,39,.14);
+          --radius:14px;
+          --radius-lg:20px;
+          --radius-xl:28px;
+          --container:1200px;
+          --nav-h:72px;
+          font-family:'Poppins',Arial,system-ui,-apple-system,sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #f1f5f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #2c3e2e;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ── HEADER ─────────────────────────── */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            width: 90%;
+            margin: 1% auto;
+            padding: 5px 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0%;
+            z-index: 1000;
+        }
+
+        .brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:17px; text-decoration: none; color: #000;}
+        .brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;
+            background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+            color:#fff;font-weight:700;box-shadow:0 6px 14px rgba(13,112,104,.3)}
+
+        header nav a {
+            text-decoration: none;
+            color: #050;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        header nav a:hover {
+            background: #e6f4ea;
+        }
+
+        /* ── CONTENT CONTAINER ──────────────── */
+        .container {
+            max-width: 900px;
+            margin: 40px auto 80px;
+            padding: 0 20px;
+        }
+
+        /* ── ANIMATIONS ─────────────────────── */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .terms-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 45px;
+            box-shadow: 0 10px 30px rgba(13, 112, 104, 0.05);
+            border: 1px solid rgba(13, 112, 104, 0.1);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .terms-header {
+            border-bottom: 2px dashed #e6f4ea;
+            padding-bottom: 24px;
+            margin-bottom: 30px;
+        }
+
+        .terms-header h1 {
+            color: var(--primary-dark);
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .last-updated {
+            font-size: 0.9rem;
+            color: #667e69;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ── ALERT BOX ──────────────────────── */
+        .legal-notice {
+            background: #fff5f5;
+            border-left: 4px solid #e53e3e;
+            color: #742a2a;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 35px;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(229, 62, 62, 0.05);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+        }
+        .legal-notice strong {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            color: #c53030;
+            font-size: 1.05rem;
+        }
+
+        /* ── SECTIONS ───────────────────────── */
+        section {
+            margin-bottom: 35px;
+            background: #fafdfc;
+            border: 1px solid #f0f7f4;
+            border-radius: 16px;
+            padding: 28px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+        }
+
+        section:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(13, 112, 104, 0.06);
+            border-color: rgba(13, 112, 104, 0.2);
+        }
+
+        section h2 {
+            color: var(--primary-dark);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        section p {
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        section ul {
+            margin-left: 24px;
+            margin-bottom: 14px;
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+
+        section li {
+            margin-bottom: 8px;
+        }
+
+        /* ── SIMPLY PUT BOX (FRIENDLY SUMMARY) ── */
+        .plain-english {
+            background: #e6f7f5;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(13, 112, 104, 0.15);
+        }
+
+        .plain-english-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .plain-english p {
+            font-size: 0.9rem;
+            color: #1a4d49;
+            margin-bottom: 0;
+            font-style: italic;
+        }
+
+        .accent-box {
+            background: #f0fdf4;
+            border-left: 4px solid var(--primary);
+            padding: 16px 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+
+        .accent-box p {
+            margin-bottom: 0;
+            font-weight: 500;
+            color: #1b4332;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px dashed #e6f4ea;
+            font-size: 0.9rem;
+            color: #718096;
+        }
+
+        @media (max-width: 600px) {
+            .terms-card {
+                padding: 24px;
+            }
+            .terms-header h1 {
+                font-size: 1.8rem;
+            }
+            .container {
+                margin: 20px auto 40px;
+            }
+            section {
+                padding: 20px;
+            }
+        }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK9XVCBPJM"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+    
+          gtag('config', 'G-NK9XVCBPJM');
+        </script>
+</head>
+<body>
+
+    <header>
+        <a href="/" class="brand"><span class="brand-mark">E</span>asy Find</a>
+        <nav>
+            <a href="/"><i class="fa-solid fa-arrow-left"></i> Home</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="terms-card">
+            
+            <div class="terms-header">
+                <h1>Terms of Service</h1>
+                <p class="last-updated"><i class="fa-regular fa-calendar"></i> Last Updated: Oct 19, 2026</p>
+            </div>
+
+            <div class="legal-notice">
+                <strong><i class="fa-solid fa-circle-exclamation"></i> PLEASE READ CAREFULLY</strong>
+                By visiting or using the Easy Find platform, you are agreeing to these Terms of Service. These terms are here to protect both you and our team, limit our legal liabilities, and set guidelines for safe interaction on our platform.
+            </div>
+
+            <!-- Section 1 -->
+            <section style="animation-delay: 0.1s;">
+                <h2><i class="fa-solid fa-circle-info" style="color: var(--primary);"></i> 1. Easy Find is an Intermediary Platform</h2>
+                
+                <div class="plain-english">
+                    <div class="plain-english-title"><i class="fa-solid fa-handshake"></i> Simply Put</div>
+                    <p>We are a listing directory matching property seekers with independent agents. We don't own, rent, or manage any of the listed properties ourselves.</p>
+                </div>
+
+                <p>Easy Find (operated by Freedom and the Squad Energy tech team) is an online marketplace connecting independent property agents with prospective renters, buyers, and guests. Easy Find is <strong>not</strong> a real estate agency, broker, developer, or owner of any listings.</p>
+                
+                <div class="accent-box">
+                    <p>We do not participate in, control, or take responsibility for any transactions, viewings, negotiations, lease agreements, or financial interactions between users and agents. Any dealings are strictly at your own risk.</p>
+                </div>
+            </section>
+
+            <!-- Section 2 -->
+            <section style="animation-delay: 0.15s;">
+                <h2><i class="fa-solid fa-house-chimney-window" style="color: var(--primary);"></i> 2. Listing "As-Is" Disclaimer</h2>
+                
+                <div class="plain-english">
+                    <div class="plain-english-title"><i class="fa-solid fa-eye"></i> Simply Put</div>
+                    <p>Agents write their own descriptions and post their own photos. Because we can't physically visit every single listed property, always inspect places in person before making financial choices.</p>
+                </div>
+
+                <p>All property listings, descriptions, pictures, prices, location coordinates, amenities, and available dates are supplied entirely by independent third-party agents. Easy Find makes no warranties or representations regarding:</p>
+                <ul>
+                    <li>The accuracy, completeness, or legitimacy of any listings on the platform.</li>
+                    <li>The structural condition, security, legality, or suitability of any listed properties.</li>
+                    <li>The ownership rights or authorization of agents to sell or lease listed properties.</li>
+                </ul>
+            </section>
+
+            <!-- Section 3 -->
+            <section style="animation-delay: 0.2s;">
+                <h2><i class="fa-solid fa-id-card" style="color: var(--primary);"></i> 3. Agent Identity Verification Disclaimer</h2>
+                
+                <div class="plain-english">
+                    <div class="plain-english-title"><i class="fa-solid fa-shield-halved"></i> Simply Put</div>
+                    <p>Our selfie and biometrics verification checks that agents are real people, which helps reduce fraud. However, this doesn't guarantee their professional behavior or business honesty. Please do your own due diligence!</p>
+                </div>
+
+                <p>Easy Find provides a secure verification portal for agents (selfie and biometrics ). However, this security verification is solely to verify the <strong>identity</strong> of the individual agent to mitigate baseline fraud. It does <strong>not</strong> constitute:</p>
+                <ul>
+                    <li>An endorsement, backing, or guarantee of the agent's professional status, moral character, or legal authority.</li>
+                    <li>A check of their credit score, licensing status, or history of commercial integrity.</li>
+                </ul>
+                <p>Users must perform their own commercial due diligence, verify agent credentials, and inspect properties in person before making any payments.</p>
+            </section>
+
+            <!-- Section 4 -->
+            <section style="animation-delay: 0.25s;">
+                <h2><i class="fa-solid fa-gavel" style="color: var(--primary);"></i> 4. Disclaimer of All Warranties</h2>
+                
+                <div class="plain-english">
+                    <div class="plain-english-title"><i class="fa-solid fa-scale-balanced"></i> Simply Put</div>
+                    <p>We work hard to provide a great system, but the platform is offered "as is" without any legal guarantees of being online, error-free, or perfect at all times.</p>
+                </div>
+
+                <p><strong>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE EASY FIND PLATFORM IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. FREEDOM EXPLICITLY DISCLAIMS ANY AND ALL WARRANTIES, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, NON-INFRINGEMENT, OR THAT THE PLATFORM WILL OPERATE UNINTERRUPTED, SECURE, OR ERROR-FREE. ANY RELIANCE ON CONTENT, LISTINGS, OR INTERACTIONS WITH AGENTS IS STRICTLY AT YOUR OWN RISK.</strong></p>
+            </section>
+
+            <!-- Section 5 -->
+            <section style="animation-delay: 0.3s;">
+                <h2><i class="fa-solid fa-triangle-exclamation" style="color: var(--primary);"></i> 5. Absolute Limitation of Liability</h2>
+                
+                <div class="plain-english">
+                    <div class="plain-english-title"><i class="fa-solid fa-ban"></i> Simply Put</div>
+                    <p>We are not responsible for any financial loss, rental fraud, bad deals, offline accidents, or injuries that occur while visiting properties listed by independent agents.</p>
+                </div>
+
+                <p><strong>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL FREESTYLETECHDESIGNER, EASY FIND, ITS FOUNDERS, DIRECTORS, AFFILIATES, AGENTS, OR EMPLOYEES BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, PUNITIVE, OR CONSEQUENTIAL DAMAGES WHATSOEVER. THIS INCLUDES, WITHOUT LIMITATION, DAMAGES OR LOSSES RESULTING FROM:</strong></p>
+                <ul>
+                    <li><strong>ANY FINANCIAL SCAMS, RENTAL FRAUD, DEPOSIT THEFT, OR MISREPRESENTATIONS COMMITTED BY THIRD-PARTY AGENTS OR USERS.</strong></li>
+                    <li><strong>THE LOSS OF ANY RENTS, DEPOSITS, BOOKING FEES, OR ACCOUNT BOOSTING PAYMENTS.</strong></li>
+                    <li><strong>ANY PHYSICAL INJURY, BODILY HARM, PROPERTY DAMAGE, OR CRIMINAL ACTIONS ARISING DURING LISTING VIEWINGS, INSPECTIONS, OR TENANCIES.</strong></li>
+                    <li><strong>TEMPORARY PLATFORM INTERRUPTIONS, DOWNTIME, OR DATA TRANSMISSION ERRORS.</strong></li>
+                </ul>
+            </section>
+
+            <!-- Section 6 -->
+            <section style="animation-delay: 0.35s;">
+                <h2><i class="fa-solid fa-user-shield" style="color: var(--primary);"></i> 6. User Indemnification</h2>
+                
+                <div class="plain-english">
+                    <div class="plain-english-title"><i class="fa-solid fa-user-check"></i> Simply Put</div>
+                    <p>If your listings or misuse of the platform gets us sued or causes us legal costs, you agree to cover those legal fees and damages.</p>
+                </div>
+
+                <p>You agree to fully defend, indemnify, and hold harmless Easy Find, Freedom, and its directors, employees, and licensing partners from and against any and all claims, damages, liabilities, losses, costs, or debt, including legal fees, arising from your use of the platform, any properties you lease/buy/sell, any listings you post, or your violation of these Terms of Service.</p>
+            </section>
+
+            <!-- Section 7 -->
+            <section style="animation-delay: 0.4s;">
+                <h2><i class="fa-solid fa-credit-card" style="color: var(--primary);"></i> 7. Payment Gateways</h2>
+                
+                <div class="plain-english">
+                    <div class="plain-english-title"><i class="fa-solid fa-wallet"></i> Simply Put</div>
+                    <p>All online payments are processed through secure channels(Paystack). Refund claims for cancellations must be resolved directly with the agent.</p>
+                </div>
+
+                <p>All payment transactions (such as boosting accounts or verification payment) are routed securely through licensed third-party processors (Paystack). Easy Find is not liable for gateway failures, chargebacks, or unauthorized cards. No refunds.</p>
+            </section>
+
+            <!-- Section 8 -->
+            <section style="animation-delay: 0.45s;">
+                <h2><i class="fa-solid fa-map-location-dot" style="color: var(--primary);"></i> 8. Governing Law</h2>
+                
+                <div class="plain-english">
+                    <div class="plain-english-title"><i class="fa-solid fa-landmark"></i> Simply Put</div>
+                    <p>These terms follow the laws of the Federal Republic of Nigeria.</p>
+                </div>
+
+                <p>These terms and any disputes arising directly from your use of the Easy Find platform shall be governed by and construed in accordance with the laws of the Federal Republic of Nigeria, without regard to its conflict of law principles.</p>
+            </section>
+
+            <!-- Section 9 -->
+            <section style="animation-delay: 0.5s;">
+                <h2><i class="fa-solid fa-comments-dollar" style="color: var(--primary);"></i> 9. Dispute Resolution & Binding Arbitration</h2>
+                
+                <div class="plain-english">
+                    <div class="plain-english-title"><i class="fa-solid fa-comments"></i> Simply Put</div>
+                    <p>If any serious issue ever comes up, we agree to settle it peacefully through private, professional arbitration in Enugu, instead of going to court.</p>
+                </div>
+
+                <p>Any dispute, controversy, or claim arising out of or relating to these Terms, including its formation, validity, breach, or termination, shall be referred to and finally resolved by binding arbitration in accordance with the Arbitration Laws of the Federal Republic of Nigeria. The arbitration shall be conducted by a single arbitrator, and the venue of arbitration shall be Enugu, Nigeria. The proceedings shall be confidential and conducted in English.</p>
+            </section>
+
+            <!-- Section 10 -->
+            <section style="animation-delay: 0.55s;">
+                <h2><i class="fa-solid fa-users-rectangle" style="color: var(--primary);"></i> 10. Class Action Waiver</h2>
+                
+                <div class="plain-english">
+                    <div class="plain-english-title"><i class="fa-solid fa-user-slash"></i> Simply Put</div>
+                    <p>Any disputes must be handled on an individual basis. You agree not to file or join group or class actions against us.</p>
+                </div>
+
+                <p>YOU AGREE THAT ANY CLAIMS OR ARBITRATION SHALL BE CONDUCTED SOLELY ON AN INDIVIDUAL BASIS. YOU EXPLICITLY WAIVE ANY RIGHT TO PARTICIPATE IN A CLASS ACTION LAWSUIT, CLASS-WIDE ARBITRATION, OR REPRESENTATIVE PROCEEDING AGAINST FREEDOM OR EASY FIND.</p>
+            </section>
+
+            <!-- Section 11 -->
+            <section style="animation-delay: 0.60s;">
+                <h2><i class="fa-solid fa-puzzle-piece" style="color: var(--primary);"></i> 11. Severability</h2>
+                
+                <div class="plain-english">
+                    <div class="plain-english-title"><i class="fa-solid fa-scissors"></i> Simply Put</div>
+                    <p>If an official arbitrator rules that one small sentence of this contract is invalid, all other parts of the terms still remain completely active and valid.</p>
+                </div>
+
+                <p>If any provision of these Terms of Service is found by a court or arbitrator of competent jurisdiction to be invalid, illegal, or unenforceable, the remaining provisions of these Terms shall remain in full force and effect.</p>
+            </section>
+
+            <footer>
+                <p>&copy; 2026 <a href="/" style="color: var(--primary); text-decoration:none; font-weight: bold;">Easy Find</a>. All rights reserved. | <a href="/terms.html" style="color: var(--primary); text-decoration:none; font-weight: bold;">Terms of Service</a></p>
+            </footer>
+
+        </div>
+    </div>
+
+</body>
+</html>

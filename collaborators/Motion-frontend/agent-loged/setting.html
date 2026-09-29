@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings – Easy Find Agent</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/logo/logo.JPEG">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK9XVCBPJM"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+    
+          gtag('config', 'G-NK9XVCBPJM');
+        </script>
+        <!-- OneSignal Web Push -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script src="/onesignal-init.js" defer></script>
+</head>
+</head>
+<body>
+
+    <header>
+        <a href="/" class="brand"><span class="brand-mark">E</span>asy Find</a>
+        <div class="profile">
+            <img src="profile.png" alt="Profile" id="profile-picture">
+            <p id="agent-name">Loading...</p>
+        </div>
+        <nav class="links">
+            <a href="/agent-loged">Dashboard</a>
+            <a href="/agent-loged/setting" class="active-link">Setting</a>
+            <button class="logout-btn" onclick="logout()" title="Logout">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </nav>
+        <div class="nav2" id="nav2">
+            <a href="/agent-loged"><i class="fa-solid fa-house"></i> Dashboard</a>
+            <a href="/agent-loged/setting"><i class="fa-solid fa-gear"></i> Setting</a>
+            <button class="logout-btn" onclick="logout()" title="Logout">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <div class="hand"></div>
+            <div class="hand"></div>
+            <div class="hand"></div>
+        </div>
+    </header>
+
+    <section class="settings-section">
+        <div class="settings-container">
+
+            <div class="settings-header">
+                <a href="/agent-loged" class="settings-back">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <i class="fa-solid fa-gear"></i>
+                <h2>Account Settings</h2>
+            </div>
+
+            <!-- Profile Info -->
+            <div class="settings-card">
+                <div class="settings-card-title">
+                    <i class="fa-solid fa-user"></i> Profile Information
+                </div>
+                <div class="settings-form">
+                    <div class="settings-field">
+                        <label>Full Name</label>
+                        <input type="text" id="setting-name" placeholder="Your full name">
+                    </div>
+                    <div class="settings-field">
+                        <label>Email Address</label>
+                        <input type="email" id="setting-email" placeholder="your@email.com" disabled>
+                        <small>Email cannot be changed</small>
+                    </div>
+                    <div class="settings-field">
+                        <label>Phone Number</label>
+                        <input type="tel" id="setting-phone" placeholder="08012345678" disabled>
+                        <small>Phone cannot be changed</small>
+                    </div>
+                    <button class="settings-btn" id="save-profile-btn" onclick="saveProfile()">
+                        <i class="fa-solid fa-floppy-disk"></i> Save Changes
+                    </button>
+                    <p id="profile-msg" class="settings-msg" style="display:none;"></p>
+                </div>
+            </div>
+
+            <!-- Change Password -->
+            <div class="settings-card">
+                <div class="settings-card-title">
+                    <i class="fa-solid fa-lock"></i> Change Password
+                </div>
+                <div class="settings-form">
+                    <div class="settings-field">
+                        <label>Current Password</label>
+                        <div class="settings-password-wrap">
+                            <input type="password" id="current-password" placeholder="Enter current password">
+                            <i class="fa-solid fa-eye toggle-pw" onclick="togglePw('current-password', this)"></i>
+                        </div>
+                    </div>
+                    <div class="settings-field">
+                        <label>New Password</label>
+                        <div class="settings-password-wrap">
+                            <input type="password" id="new-password" placeholder="Enter new password">
+                            <i class="fa-solid fa-eye toggle-pw" onclick="togglePw('new-password', this)"></i>
+                        </div>
+                    </div>
+                    <div class="settings-field">
+                        <label>Confirm New Password</label>
+                        <div class="settings-password-wrap">
+                            <input type="password" id="confirm-password" placeholder="Confirm new password">
+                            <i class="fa-solid fa-eye toggle-pw" onclick="togglePw('confirm-password', this)"></i>
+                        </div>
+                    </div>
+                    <button class="settings-btn" id="change-pw-btn" onclick="changePassword()">
+                        <i class="fa-solid fa-key"></i> Update Password
+                    </button>
+                    <p id="password-msg" class="settings-msg" style="display:none;"></p>
+                </div>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="settings-card settings-danger-card">
+                <div class="settings-card-title">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Danger Zone
+                </div>
+                <div class="settings-form">
+                    <p class="settings-danger-text">Once you delete your account, all your listings and data will be permanently removed. This action cannot be undone.</p>
+                    <button class="settings-btn settings-btn-danger" onclick="deleteAccount()">
+                        <i class="fa-solid fa-trash"></i> Delete Account
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 25px 0; margin-top: 40px; border-top: 1px solid #e8ecf1; font-size: 14px; color: #666; width: 100%;">
+        <p>&copy; 2026 Easy Find. All rights reserved. | <a href="/terms" style="color: #005f66; text-decoration: none; font-weight: 600;">Terms of Service</a></p>
+    </footer>
+
+    <script src="/alert-box.js"></script>
+    <script>
+        // Nav hamburger
+        const nav2      = document.getElementById('nav2');
+        const hamburger = document.getElementById('hamburger');
+        hamburger.addEventListener('click', () => {
+            nav2.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Load agent info
+        async function loadAgent() {
+            try {
+                const res  = await fetch('/api/agent/profile');
+                const data = await res.json();
+                if (!data.success) return window.location.href = '/login-agent';
+                const agent = data.agent;
+                document.getElementById('agent-name').textContent  = agent.name.length > 8?
+                 agent.name.slice(0, 8) + '...' : agent.name;
+                document.getElementById('setting-name').value      = agent.name;
+                document.getElementById('setting-email').value     = agent.email;
+                document.getElementById('setting-phone').value     = agent.number;
+                if (agent.profilePicture) {
+                    document.getElementById('profile-picture').src = agent.profilePicture;
+                }
+            } catch (e) {
+                console.error('Failed to load agent:', e);
+            }
+        }
+
+        function togglePw(id, icon) {
+            const input = document.getElementById(id);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        async function saveProfile() {
+            const name = document.getElementById('setting-name').value.trim();
+            if (!name) return showMsg('profile-msg', 'Name cannot be empty', 'error');
+
+            const btn = document.getElementById('save-profile-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner spin-icon"></i> Saving...';
+
+            try {
+                const res  = await fetch('/api/agent/settings/name', {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name })
+                });
+                const data = await res.json();
+                showMsg('profile-msg', data.message, data.success ? 'success' : 'error');
+                if (data.success) return console.log(data.success);
+            } catch (e) {
+                showMsg('profile-msg', 'Failed to save. Try again.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Changes';
+            }
+        }
+
+        async function changePassword() {
+            const current = document.getElementById('current-password').value;
+            const newPw   = document.getElementById('new-password').value;
+            const confirm = document.getElementById('confirm-password').value;
+
+            if (!current || !newPw || !confirm) return showMsg('password-msg', 'All fields are required', 'error');
+            if (newPw !== confirm) return showMsg('password-msg', 'New passwords do not match', 'error');
+            if (newPw.length < 8) return showMsg('password-msg', 'Password must be at least 8 characters', 'error');
+
+            const btn = document.getElementById('change-pw-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner spin-icon"></i> Updating...';
+
+            try {
+                const res  = await fetch('/api/agent/settings/password', {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ currentPassword: current, newPassword: newPw })
+                });
+                const data = await res.json();
+                showMsg('password-msg', data.message, data.success ? 'success' : 'error');
+                if (data.success) {
+                    document.getElementById('current-password').value = '';
+                    document.getElementById('new-password').value = '';
+                    document.getElementById('confirm-password').value = '';
+                }
+            } catch (e) {
+                showMsg('password-msg', 'Failed to update. Try again.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-key"></i> Update Password';
+            }
+        }
+
+        async function deleteAccount() {
+            if (!confirm('Are you sure? This will permanently delete your account and ALL your listings. This cannot be undone.')) return;
+            try {
+                const res  = await fetch('/api/agent/settings/delete', { method: 'DELETE' });
+                const data = await res.json();
+                if (data.success) window.location.href = '/';
+                else alert(data.message);
+            } catch (e) {
+                alert('Failed to delete account. Try again.');
+            }
+        }
+
+        function showMsg(id, text, type) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = text;
+            el.className = 'settings-msg settings-msg-' + type;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 4000);
+        }
+
+        function logout() {
+            fetch('/api/agent/logout', { method: 'POST' })
+                .then(() => window.location.href = '/');
+        }
+
+        loadAgent();
+    </script>
+
+</body>
+</html>

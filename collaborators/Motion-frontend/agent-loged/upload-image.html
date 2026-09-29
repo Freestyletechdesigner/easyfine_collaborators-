@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/logo/logo.JPEG">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Upload Profile Picture</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK9XVCBPJM"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+    
+          gtag('config', 'G-NK9XVCBPJM');
+        </script>
+        <!-- OneSignal Web Push -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script src="/onesignal-init.js" defer></script>
+</head>
+</head>
+<body>
+
+<style>
+    :root {
+        --primary-color: #07534d;
+        --primary-light: #0d7970;
+        --primary-dark: #043531;
+        --accent-color: #27b3cc;
+        --danger-color: #e04454;
+        --text-main: #2d3748;
+        --text-muted: #718096;
+        --bg-glass: rgba(255, 255, 255, 0.95);
+        --radius-lg: 24px;
+        --radius-md: 14px;
+        --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        --shadow-lg: 0 20px 40px -5px rgba(4, 53, 49, 0.15), 0 10px 20px -5px rgba(0, 0, 0, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background: radial-gradient(circle at 10% 20%, rgba(243, 248, 247, 1) 0%, rgba(217, 232, 230, 1) 90%);
+      margin: 0;
+      padding: clamp(20px, 5vw, 60px) 16px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 480px;
+      width: 100%;
+      background: var(--bg-glass);
+      padding: clamp(24px, 6vw, 44px) clamp(20px, 5vw, 36px);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-close {
+      position: relative;
+      left: 0%;
+      text-decoration: none;
+      background: rgb(185, 0, 0);
+      border: none;
+      font-size: 1.75rem;
+      color: white;
+      cursor: pointer;
+      padding-bottom: 6px;
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      font-weight: 300;
+      flex-shrink: 0;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .header h1 {
+      font-size: clamp(24px, 5vw, 28px);
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin: 0 0 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .header h1 i {
+      color: var(--primary-color);
+    }
+
+    .header p {
+      color: var(--text-muted);
+      font-size: clamp(14px, 2.8vw, 15px);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Profile Picture Preview container */
+    .profile-preview {
+      width: 160px;
+      height: 160px;
+      margin: 0 auto 28px;
+      position: relative;
+      border-radius: 50%;
+      border: 4px solid #002718;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .profile-preview:hover {
+      transform: scale(1.03);
+    }
+
+    .profile-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .profile-preview .camera-overlay {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      background: var(--primary-color);
+      color: white;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      border: 3px solid #fff;
+      transition: all 0.25s ease;
+    }
+
+    .profile-preview .camera-overlay:hover {
+      background: var(--primary-light);
+      transform: scale(1.1);
+    }
+
+    .profile-preview .camera-overlay i {
+      font-size: 16px;
+    }
+
+    /* Drop zone UI card hook setup */
+    .drop-zone {
+      border: 2px dashed rgba(7, 83, 77, 0.25);
+      border-radius: var(--radius-md);
+      padding: 32px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-bottom: 24px;
+      background: rgba(7, 83, 77, 0.02);
+    }
+
+    .drop-zone:hover,
+    .drop-zone.drag-over {
+      border-color: var(--primary-color);
+      background: rgba(7, 83, 77, 0.06);
+    }
+
+    .drop-zone.drag-over {
+      transform: scale(0.99);
+    }
+
+    .drop-zone i {
+      font-size: 38px;
+      color: var(--primary-color);
+      margin-bottom: 12px;
+      opacity: 0.85;
+    }
+
+    .drop-zone p {
+      color: var(--text-main);
+      font-size: 14px;
+      margin: 0 0 6px 0;
+    }
+
+    .drop-zone p strong {
+      color: var(--primary-color);
+    }
+
+    .drop-zone .file-info {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Buttons layouts */
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 14px 20px;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      outline: none;
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .btn.upload {
+      background: var(--primary-color);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(7, 83, 77, 0.15);
+    }
+
+    .btn.upload:hover:not(:disabled) {
+      background: var(--primary-light);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(7, 83, 77, 0.25);
+    }
+
+    .btn.upload:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn.delete {
+      background: #fff;
+      color: var(--danger-color);
+      border: 1px solid rgba(224, 68, 84, 0.2);
+    }
+
+    .btn.delete:hover:not(:disabled) {
+      background: rgba(224, 68, 84, 0.04);
+      border-color: var(--danger-color);
+    }
+
+    .btn.skip {
+      background: rgba(0, 0, 0, 0.04);
+      color: var(--text-main);
+      text-decoration: none;
+      border: 1px solid transparent;
+    }
+
+    .btn.skip:hover {
+      background: rgba(0, 0, 0, 0.08);
+    }
+
+    /* System Status Alerts design configuration options */
+    .alert {
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      margin-bottom: 24px;
+      display: none;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.4;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .alert.success {
+      background: #e6f6f4;
+      color: #11685e;
+      border: 1px solid #bce5e0;
+    }
+
+    .alert.error {
+      background: #fdf2f2;
+      color: #c81e1e;
+      border: 1px solid #f8b4b4;
+    }
+
+    .alert i {
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Core UI system performance spinner adjustments */
+    .spinner {
+      border: 2.5px solid rgba(255, 255, 255, 0.3);
+      border-top: 2.5px solid #fff;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      animation: spin 0.8s linear infinite;
+    }
+    
+    .btn.delete .spinner {
+      border-color: rgba(220, 68, 84, 0.2);
+      border-top-color: var(--danger-color);
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Clean viewport break structural handling rule arrays */
+    @media (max-width: 400px) {
+      .actions {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .btn {
+        width: 100%;
+        padding: 12px 16px;
+      }
+    }
+</style>
+
+  <div class="container">
+    <a href="/agent-loged" class="modal-close">×</a>
+    <div class="header">
+      <h1><i class="fas fa-user-circle"></i> Profile Picture</h1>
+      <p>Upload your profile picture to personalize your account</p>
+    </div>
+
+    <div class="alert" id="alert">
+      <i class="fas fa-check-circle"></i>
+      <span id="alert-message"></span>
+    </div>
+
+    <div class="profile-preview">
+      <img src="profile.png" id="preview" alt="Profile Picture">
+      <label class="camera-overlay" for="fileInput">
+        <i class="fas fa-camera"></i>
+      </label>
+    </div>
+
+    <div class="drop-zone" id="dropZone">
+      <i class="fas fa-cloud-upload-alt"></i>
+      <p><strong>Click to upload</strong> or drag and drop</p>
+      <p class="file-info">JPEG, PNG, GIF, WebP</p>
+    </div>
+
+    <input type="file" id="fileInput" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp" hidden>
+
+    <div class="actions">
+      <button class="btn upload" id="uploadBtn" disabled>
+        <i class="fas fa-upload"></i>
+        Upload Picture
+      </button>
+      <button class="btn delete" id="deleteBtn">
+        <i class="fas fa-trash"></i>
+        Delete
+      </button>
+    </div>
+
+    <div class="actions" style="margin-top: 12px;">
+      <a href="/agent-loged" class="btn skip">
+        <i class="fas fa-arrow-left"></i>
+        Back to Dashboard
+      </a>
+    </div>
+
+    <div style="text-align: center; margin-top: 28px; font-size: 12px; color: var(--text-muted); width: 100%; line-height: 1.5;">
+        By uploading a picture, you agree to our <a href="/terms" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">Terms of Service</a>
+    </div>
+  </div>
+
+<script src="alert-box.js"></script>
+
+<script>
+    // Elements references
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const preview = document.getElementById('preview');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const deleteBtn = document.getElementById('deleteBtn');
+    const alert = document.getElementById('alert');
+    const alertMessage = document.getElementById('alert-message');
+
+    let selectedFile = null;
+
+    // Load existing profile picture
+    async function loadProfilePicture() {
+      try {
+        const response = await fetch('/api/agent/profile/picture');
+        
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success && data.profilePicture) {
+            preview.src = data.profilePicture;
+          }
+        } else if (response.status === 403) {
+          window.location.href = '/login-agent';
+        }
+      } catch (error) {
+        console.error('Error loading profile picture:', error);
+      }
+    }
+
+    loadProfilePicture();
+
+    // Modern wrapper mapping function utilizing your custom component instance
+    function showAlert(message, type) {
+      if (type === 'success') {
+          alertBox.success('Success', message);
+      } else if (type === 'error') {
+          alertBox.error('Error', message);
+      } else {
+          alertBox.info('Notification', message);
+      }
+    }
+
+    // Frontend canvas compression module engine pipeline
+    function compressImageOnFrontend(file, maxDimension, quality) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        
+        reader.onload = (event) => {
+          const img = new Image();
+          img.src = event.target.result;
+          
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+              if (width > maxDimension) {
+                height = Math.round((height * maxDimension) / width);
+                width = maxDimension;
+              }
+            } else {
+              if (height > maxDimension) {
+                width = Math.round((width * maxDimension) / height);
+                height = maxDimension;
+              }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            canvas.toBlob((blob) => {
+              if (blob) {
+                resolve(blob);
+              } else {
+                reject(new Error("Canvas export failed"));
+              }
+            }, 'image/jpeg', quality);
+          };
+        };
+        reader.onerror = (error) => reject(error);
+      });
+    }
+
+    // Handle file selection
+    async function handleFile(file) {
+      if (!file) return;
+
+      const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+      if (!validTypes.includes(file.type)) {
+        showAlert('Please select a valid image file (JPEG, PNG, GIF, WebP)', 'error');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        preview.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+
+      uploadBtn.disabled = true;
+      uploadBtn.innerHTML = '<div class="spinner"></div> Optimizing pixels...';
+
+      try {
+        const compressedBlob = await compressImageOnFrontend(file, 1200, 0.7);
+        
+        if (compressedBlob.size > 6 * 1024 * 1024) {
+          showAlert('Optimized file size is still too large. Must be under 9MB.', 'error');
+          uploadBtn.disabled = true;
+          uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Picture';
+          return;
+        }
+
+        selectedFile = compressedBlob;
+        uploadBtn.disabled = false;
+        uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Picture';
+        
+        console.log(`Original: ${(file.size / 1024 / 1024).toFixed(2)} MB -> Compressed: ${(compressedBlob.size / 1024).toFixed(2)} KB`);
+
+      } catch (err) {
+        console.error("Frontend image compression runtime error:", err);
+        showAlert('Failed to process image file structure.', 'error');
+        uploadBtn.disabled = false;
+        uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Picture';
+      }
+    }
+
+    // Click to upload
+    dropZone.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    // File input change
+    fileInput.addEventListener('change', (e) => {
+      handleFile(e.target.files[0]);
+    });
+
+    // Drag and drop
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('drag-over');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('drag-over');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      handleFile(e.dataTransfer.files[0]);
+    });
+
+    // Upload button
+    uploadBtn.addEventListener('click', async () => {
+      if (!selectedFile) return;
+
+      const formData = new FormData();
+      formData.append('profilePicture', selectedFile, 'profile_compressed.jpg');
+
+      uploadBtn.disabled = true;
+      uploadBtn.innerHTML = '<div class="spinner"></div> Uploading...';
+
+      try {
+        const response = await fetch('/api/agent/profile/picture', {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          showAlert('Profile picture uploaded successfully!', 'success');
+          selectedFile = null;
+          uploadBtn.disabled = true;
+          uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Picture';
+          loadProfilePicture();
+        } else {
+          showAlert(data.message || 'Upload failed', 'error');
+          uploadBtn.disabled = false;
+          uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Picture';
+        }
+      } catch (error) {
+        showAlert('Error uploading file', 'error');
+        uploadBtn.disabled = false;
+        uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Picture';
+      }
+    });
+
+    // Delete button
+    deleteBtn.addEventListener('click', () => {
+      // Replaced old confirm modal trigger layout with custom dynamic callback structure method execution
+      alertBox.confirm(
+        'Delete Photo', 
+        'Are you sure you want to delete your profile picture?', 
+        async () => {
+          // Execute onConfirm block
+          deleteBtn.disabled = true;
+          deleteBtn.innerHTML = '<div class="spinner"></div> Deleting...';
+
+          try {
+            const response = await fetch('/api/agent/profile/picture', {
+              method: 'DELETE'
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+              showAlert('Profile picture deleted successfully!', 'success');
+              preview.src = 'profile.png';
+              selectedFile = null;
+              uploadBtn.disabled = true;
+            } else {
+              showAlert(data.message || 'Delete failed', 'error');
+            }
+          } catch (error) {
+            showAlert('Error deleting file', 'error');
+          } finally {
+            deleteBtn.disabled = false;
+            deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Delete';
+          }
+        },
+        () => {
+          // Optional code context path for handling onCancel state conditions smoothly
+          console.log("Deletion event canceled safely.");
+        }
+      );
+    });
+</script>
+</body>
+</html>

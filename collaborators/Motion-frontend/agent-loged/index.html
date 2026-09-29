@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/logo/logo.JPEG">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <title>Agent Dashboard</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NK9XVCBPJM"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+    
+          gtag('config', 'G-NK9XVCBPJM');
+        </script>
+        <!-- OneSignal Web Push -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script src="/onesignal-init.js" defer></script>
+</head>
+</head>
+<body>
+
+    <header>
+        <a href="/" class="brand"><span class="brand-mark">E</span>asy Find</a>
+
+        <div class="profile">
+            <img src="profile.png" alt="Profile" id="profile-picture" onclick="window.location.href='/agent-loged/upload-profilepicture'" title="Click to change profile picture">
+            <p id="agent-name">Loading...</p>
+            <span class="upload-pic" onclick="window.location.href='/agent-loged/upload-profilepicture'" >Upload profile picture!</span>
+            <span class="verify"><i class="fa-solid fa-circle-check"></i></span>
+            <span class="verifyText">verified agent</span>
+        </div>
+        
+         <nav class="links">
+             <a href="/">Back to Home</a>
+             <a href="/agent-loged/setting">Setting</a>
+             <a href="/agent-verification" id="verification-link">Verification</a>
+             <a href="/boost-account"><i class="fas fa-rocket"></i> Boost</a>
+            <button class="logout-btn" onclick="logout()" title="Logout">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+         </nav>
+
+             <div class="nav2" id="nav2">
+                <div class="top-nav">
+                    <a href="#top" class="brand"><span class="brand-mark">E</span>asy Find</a>
+                </div>
+                <a href="/"><i class="fa-solid fa-house"></i> Back to Home</a>
+                <a href="/agent-loged/setting"><i class="fa-solid fa-gear"></i> Setting</a>
+                <a href="/agent-verification" id="verification-link"><i class="fa-solid fa-user-tie"></i> Verification</a>
+                <a href="/boost-account"><i class="fas fa-rocket"></i> Boost</a>
+                <button class="logout-btn" onclick="logout()" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+             </div>
+             
+            <div class="hamburger" id="hamburger">
+             <div id="hand" class="hand"></div>
+             <div id="hand" class="hand"></div>
+             <div id="hand" class="hand"></div>
+             </div>
+
+    </header>
+
+    <!-- Trigger Button (Place this in your Navbar) -->
+    <button class="noti-trigger-btn" id="notiTrigger">
+        <i class="fa-regular fa-bell"></i>
+        <span class="noti-badge" id="notiBadge">3</span>
+    </button>
+
+    <!-- Slide-out Notification Center Panel -->
+    <div class="noti-panel" id="notiPanel">
+        <div class="noti-header">
+            <div class="noti-header-top">
+                <h3>Notifications</h3>
+                <button class="close-panel-btn" id="closePanel"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <!-- Interactive Tabs -->
+            <div class="noti-tabs">
+                <button class="tab-btn active" data-tab="all">All</button>
+                <button class="tab-btn" data-tab="updates">Updates</button>
+                <button class="tab-btn" data-tab="alerts">Alerts</button>
+            </div>
+        </div>
+
+        <!-- Scrollable Notification List Container -->
+        <div class="noti-body" id="notiBody">
+            <!-- Dynamic notifications will be injected here via JS -->
+        </div>
+
+        <div class="noti-footer">
+        </div>
+    </div>
+
+    <!-- Background Overlay when panel opens -->
+    <div class="noti-overlay" id="notiOverlay"></div>
+
+    <section class="hero">
+        <div class="hold-hero-text">
+            <p>EASY FIND PORTFOLIO PORTAL</p>
+            <h1>AGENT LISTINGS CONTROL PANEL</h1>
+            <span>Instantly manage properties, copy share links, <br> track analytics, and 
+                generate beautiful property descriptions using our AI.
+            </span>
+            <a onclick="openModal()">
+                <i class="fa-solid fa-plus"></i>
+                Upload properties
+            </a>
+        </div>
+
+    </section>
+
+
+    <!-- Modal -->
+    <section class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">List New Property</h3>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <form enctype="multipart/form-data" id="propertyForm">
+                    <!-- Image Upload -->
+                    <div class="form-group">
+                        <label>Property Images</label>
+                        <div class="upload-preview" id="imagePreviewContainer"></div>
+                        <div class="image-upload-zone" onclick="document.getElementById('fileInput').click()">
+                            <input type="file" name="file" id="fileInput" class="upload-input" accept="image/*" multiple>
+                            <div class="upload-icon"><i class="fa-solid fa-cloud"></i></div>
+                            <div class="upload-text">Click to upload images</div>
+                            <div class="upload-hint">PNG, JPG, GIF, WEBP</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Property Title *</label>
+                            <input type="text" name="title" required placeholder="e.g., Flats or Duplex, etc">
+                        </div>
+                        <div class="form-group">
+                            <label>Price (₦) *</label>
+                            <input type="text" name="price" id="postPrice" inputmode="numeric" required min="0" placeholder="e.g. 1,500,000">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Property Type</label>
+                            <select name="type" id="typeSelect">
+                                <option value="house">House</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="land">Land</option>
+                                <option value="villa">Villa</option>
+                                <option value="commercial">Commercial</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Listing Category *</label>
+                            <select name="category" required>
+                                <option value="" disabled selected>Select category</option>
+                                <option value="sale">For Sale</option>
+                                <option value="rent">For Rent</option>
+                                <option value="shortlet">Short-let</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Location *</label>
+                            <input type="text" name="location" required placeholder="eg. Street name">
+                        </div>
+                    </div>
+
+                    <div class="form-row three">
+                        <div class="form-group" id="groupBeds">
+                            <label>Bedrooms</label>
+                            <input type="number" name="beds" min="0" placeholder="0">
+                        </div>
+                        <div class="form-group" id="groupBaths">
+                            <label>Bathrooms</label>
+                            <input type="number" name="baths" min="0" step="0.5" placeholder="0">
+                        </div>
+                        <div class="form-group" id="groupLand" >
+                            <label>Plot</label>
+                            <input type="text" name="area" min="0" placeholder="eq. 1 Plot">
+                        </div>
+                    </div>
+
+                    <!-- Description Form Group updated with AI prompt trigger button -->
+                    <div class="form-group">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <label style="margin-bottom: 0;">Description</label>
+                            <button type="button" id="btnAiPost" onclick="generateAIDescription('post')" style="background: linear-gradient(135deg, #247a6c 0%, #06613e 100%); color: white; border: none; padding: 6px 14px; border-radius: 8px; font-size: 0.78rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(126, 34, 206, 0.25); transition: all 0.2s;">
+                                <i class="fas fa-magic"></i> Write with AI
+                            </button>
+                        </div>
+                        <textarea name="description" id="postDescription" rows="3" placeholder="Describe the unique features of this property..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Features (Select all that apply)</label>
+                        <div class="features-container" id="featuresContainer"></div>
+                        <input type="hidden" name="features" id="featuresInput">
+                        <input type="hidden" name="latitude"  id="propLatitude">
+                        <input type="hidden" name="longitude" id="propLongitude">
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="button" class="btn btn-primary" id="submit" onclick="submitProperty()">
+                    <span class="spinner"></span>
+                    <span class="btn-text">Publish Listing</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Picker Modal -->
+    <section class="modal-overlay" id="mapPickerOverlay">
+        <div class="modal" style="max-width:680px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-map-marker-alt"></i> Pin Your Property Location</h3>
+                <button class="modal-close" onclick="closeMapPicker()">×</button>
+            </div>
+            <div class="modal-body" style="padding:0;">
+                <div style="padding:14px 16px 10px;background:#f5fdfd;border-bottom:1px solid #e0f7f5;">
+                    <p style="font-size:0.85rem;color:#555;margin:0 0 10px;">
+                        <i class="fas fa-info-circle" style="color:#0d7068;"></i>
+                        Search for a nearby landmark or drag the pin to your exact location.
+                    </p>
+                    <div style="display:flex;gap:8px;">
+                        <input type="text" id="mapSearchInput" placeholder="Search nearby area (e.g. Agbani Road, Enugu)"
+                               style="flex:1;padding:10px 14px;border:2px solid #e0f7f5;border-radius:10px;font-size:0.9rem;outline:none;">
+                        <button onclick="searchMapLocation()" style="padding:10px 18px;background:#0d7068;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:600;">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div id="mapSearchResults" style="margin-top:8px;max-height:120px;overflow-y:auto;"></div>
+                </div>
+                <div id="mapPickerContainer" style="height:340px;width:100%;"></div>
+                <div style="padding:12px 16px;background:#f5fdfd;border-top:1px solid #e0f7f5;display:flex;justify-content:space-between;align-items:center;">
+                    <span id="mapPickerCoords" style="font-size:0.8rem;color:#888;">Click or drag pin to set location</span>
+                    <button onclick="confirmMapLocation()" style="padding:10px 24px;background:#0d7068;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:700;">
+                        <i class="fas fa-check"></i> Confirm Location
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Edit Modal -->
+    <section class="modal-overlay" id="editModalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit Property</h3>
+                <button class="modal-close" onclick="closeEditModal()">×</button>
+            </div>
+
+            <div class="modal-body">
+                <form enctype="multipart/form-data" id="editPropertyForm">
+                    <div class="form-group">
+                        <label>Property Images</label>
+                        <div class="upload-preview" id="editImagePreviewContainer"></div>
+                        <div class="image-upload-zone" onclick="document.getElementById('editFileInput').click()">
+                            <input type="file" name="file" id="editFileInput" class="upload-input" accept="image/*" multiple>
+                            <div class="upload-icon"><i class="fa-solid fa-cloud"></i></div>
+                            <div class="upload-text">Click to upload new images</div>
+                            <div class="upload-hint">PNG, JPG, GIF, WEBP</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Property Title *</label>
+                            <input type="text" name="title" id="editTitle" required placeholder="e.g., Flats or Duplex">
+                        </div>
+                        <div class="form-group">
+                            <label>Price (₦) *</label>
+                            <input type="text" name="price" id="editPrice" required placeholder="500000">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Property Type</label>
+                            <select name="type" id="editTypeSelect">
+                                <option value="house">House</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="land">Land</option>
+                                <option value="villa">Villa</option>
+                                <option value="commercial">Commercial</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Listing Category *</label>
+                            <select name="category" id="editCategory" required>
+                                <option value="" disabled>Select category</option>
+                                <option value="sale">For Sale</option>
+                                <option value="rent">For Rent</option>
+                                <option value="shortlet">Short-let</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Location *</label>
+                            <input type="text" name="location" id="editLocation" required placeholder="eg. 1 Street name">
+                        </div>
+                    </div>
+
+                    <div class="form-row three">
+                        <div class="form-group" id="editGroupBeds">
+                            <label>Bedrooms</label>
+                            <input type="number" name="beds" id="editBeds" min="0" placeholder="0">
+                        </div>
+                        <div class="form-group" id="editGroupBaths">
+                            <label>Bathrooms</label>
+                            <input type="number" name="baths" id="editBaths" min="0" step="0.5" placeholder="0">
+                        </div>
+                        <div class="form-group" id="editGroupLand">
+                            <label>Plot</label>
+                            <input type="text" name="area" id="editArea" placeholder="eq. 1 Plot">
+                        </div>
+                    </div>
+
+                    <!-- Edit Modal Description layout updated with AI Prompt trigger button -->
+                    <div class="form-group">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <label style="margin-bottom: 0;">Description</label>
+                            <button type="button" id="btnAiEdit" onclick="generateAIDescription('edit')" style="background: linear-gradient(135deg, #247a6c 0%, #06613e 100%); color: white; border: none; padding: 6px 14px; border-radius: 8px; font-size: 0.78rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(126, 34, 206, 0.25); transition: all 0.2s;">
+                                <i class="fas fa-magic"></i> Write with AI
+                            </button>
+                        </div>
+                        <textarea name="description" id="editDescription" rows="3" placeholder="Describe the property..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Features (Select all that apply)</label>
+                        <div class="features-container" id="editFeaturesContainer"></div>
+                        <input type="hidden" name="features" id="editFeaturesInput">
+                        <input type="hidden" id="editLat" name="latitude">
+                        <input type="hidden" id="editLng" name="longitude">
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+                <button type="button" class="btn btn-primary" id="editSubmitBtn" onclick="submitEdit()">
+                    <span class="spinner"></span>
+                    <span class="btn-text">Save Changes</span>
+                </button>
+            </div>
+        </div>
+    </section>
+    <div class="bio-strip" id="bioStrip">
+        <div class="bio-strip-inner">
+            <span class="bio-strip-icon"><i class="fas fa-user-pen"></i></span>
+            <p class="bio-strip-text" id="bioText">No bio added yet.</p>
+            <button class="bio-strip-btn" onclick="toggleBioEdit()" id="bioEditBtn" title="Edit bio">
+                <i class="fas fa-pen"></i>
+            </button>
+        </div>
+        <!-- Edit mode (hidden by default) -->
+        <div class="bio-strip-form" id="bioEditForm">
+            <textarea id="bioInput" name="bio" class="bio-strip-textarea" maxlength="300"
+                placeholder="Tell clients about yourself..."></textarea>
+            <div class="bio-strip-actions">
+                <span class="bio-char-count"><span id="bioCharCount">0</span>/300</span>
+                <button class="bio-cancel-btn" onclick="cancelBioEdit()">Cancel</button>
+                <button class="bio-save-btn" onclick="saveBio()">
+                    <span class="spinner" id="bioSpinner" style="display:none;"></span>
+                    <span>Save</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+<!-- Properties Section -->
+    <section class="properties-section" id="properties">
+        <div class="properties-header">
+            <div class="properties-header-left">
+                <h2>My Listings <span id="property-count"></span></h2>
+                <span class="views-badge" id="total-views"></span>
+            </div>
+            <button class="btn-add" onclick="openModal()">
+                <i class="fas fa-plus"></i> Add New
+            </button>
+        </div>
+
+        <div class="properties-grid" id="propertiesGrid">
+            <!-- Cards injected by JS -->
+        </div>
+
+        <div class="properties-empty" id="propertiesEmpty" style="display:none;">
+            <i class="fas fa-home"></i>
+            <p>No properties listed yet</p>
+            <button class="btn-add" onclick="openModal()">List your first property</button>
+        </div>
+    </section>
+      <!-- Share profile -->
+        <div class="floating-share-bar" id="shareBar">
+            <span class="share-label">Share Profile Link</span>
+            <button class="share-btn" onclick="copyProfileLink()" title="Copy Profile Link">
+        <i class="fas fa-share-alt"></i>
+            </button>
+            <div class="share-tooltip" id="shareTooltip">Link Copied!</div>
+        </div>
+
+    <footer style="text-align: center; padding: 25px 0; margin-top: 40px; border-top: 1px solid #e8ecf1; font-size: 14px; color: #666; width: 100%;">
+        <p>&copy; 2026 Easy Find. All rights reserved. | <a href="/terms" style="color: #005f66; text-decoration: none; font-weight: 600;">Terms of Service</a></p>
+    </footer>
+
+    <script src="alert-box.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="logic.js"></script>
+
+</body>
+</html>
